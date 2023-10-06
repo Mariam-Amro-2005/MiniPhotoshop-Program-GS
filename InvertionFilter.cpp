@@ -30,7 +30,7 @@ void invertImage();
 
 int main()
 {
-  loadImage(); //euk
+  loadImage(); 
   invertImage();
   saveImage();
   return 0;
