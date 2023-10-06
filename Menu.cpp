@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <cstdio>
+#include <cstdio>  //edit
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
