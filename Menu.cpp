@@ -9,13 +9,13 @@
 
 #include <iostream>
 #include <fstream>
-#include <cstdio>  //edit
+#include <cstdio>  
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
 
 void loadImage ();
-char Options();
+string Options();
 void saveImage();
 void invertImage();
 void rotateImage();
@@ -47,7 +47,7 @@ void loadImage () {
    readGSBMP(imageFileName, image);
 }
 
-char Options(){
+string Options(){
     string option;
     string line;
     fstream menu("Menu.txt");  // Menu.txt contains the options of filters to choose from
@@ -60,65 +60,62 @@ char Options(){
     cin >> option;
     do
     {
-        switch (option[0])    //To allow users to choose options and prevent entering of invalid options
-    {
-        case "1":
-            //
-            break;
-        case "2":
-            invertImage();
-            break;
-        case "3":
-            //
-            break;
-        case "4":
-            //
-            break;
-        case "5":
-            rotateImage();
-            break;
-        case "6":
-            //
-            break;
-        case "7":
-            //
-            break;
-        case "8":
-            //
-            break;
-        case "9":
-            //
-            break;
-        case "a":
-            //
-            break;
-        case "b":
-            //
-            break;
-        case "c":
-            //
-            break;
-        case "d":
-            //
-            break;
-        case "e":
-            //
-            break;
-        case "f":
-            //
-            break;
-        case "s":
-            saveImage();
-            break;
-        case "0":
-            break;
-    
-    default:
-        invalid = 1;
-        cout << "Sorry! Invalid option. Please choose a correct option.\n"
-        break;
-    }
-        
+        if (option == "1")
+        {
+            /* code */
+        }else if (option == "2")
+        {
+            /* code */
+        }else if (option == "3")
+        {
+            /* code */
+        }else if (option == "4")
+        {
+            /* code */
+        }else if (option == "5")
+        {
+            /* code */
+        }else if (option == "6")
+        {
+            /* code */
+        }else if (option == "7")
+        {
+            /* code */
+        }else if (option == "8")
+        {
+            /* code */
+        }else if (option == "9")
+        {
+            /* code */
+        }else if (option == "a")
+        {
+            /* code */
+        }else if (option == "b")
+        {
+            /* code */
+        }else if (option == "c")
+        {
+            /* code */
+        }else if (option == "d")
+        {
+            /* code */
+        }else if (option == "e")
+        {
+            /* code */
+        }else if (option == "f")
+        {
+            /* code */
+        }else if (option == "s")
+        {
+            /* code */
+        }else if (option == "0")
+        {
+            /* code */
+        }else{
+            invalid = 1;
+            cout << "Sorry! Invalid option. Please choose a correct option.\n";
+        }
+     
     } while (invalid);
     
     return option;
