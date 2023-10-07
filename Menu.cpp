@@ -65,7 +65,7 @@ string Options(){
             /* code */
         }else if (option == "2")
         {
-            /* code */
+            invertImage();
         }else if (option == "3")
         {
             /* code */
@@ -74,7 +74,7 @@ string Options(){
             /* code */
         }else if (option == "5")
         {
-            /* code */
+            rotateImage();
         }else if (option == "6")
         {
             /* code */
@@ -107,13 +107,14 @@ string Options(){
             /* code */
         }else if (option == "s")
         {
-            /* code */
+            saveImage();
         }else if (option == "0")
         {
             /* code */
         }else{
             invalid = 1;
             cout << "Sorry! Invalid option. Please choose a correct option.\n";
+            cin >> option;
         }
      
     } while (invalid);
