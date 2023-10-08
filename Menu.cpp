@@ -111,6 +111,7 @@ string Options(){
         }else if (option == "s")
         {
             saveImage();
+
         }else if (option == "0")
         {
             /* code */
@@ -119,7 +120,7 @@ string Options(){
             cout << "Sorry! Invalid option. Please choose a correct option.\n";
             cin >> option;
         }
-     
+
     } while (invalid);
     
     return option;
