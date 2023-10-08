@@ -1,11 +1,14 @@
 // FCAI – OOP Programming – 2023 - Assignment 1 
-// Program Name:				RotatingFilter.cpp
-// Last Modification Date:	6/10/2023
+// Program Name:				EnlargingFilter.cpp
+// Last Modification Date:	8/10/2023
 // Author1 and ID and Group:	xxxxx xxxxx
 // Author2 and ID and Group:	Mariam Amro 20221217
 // Author3 and ID and Group:	xxxxx xxxxx
 // Teaching Assistant:		xxxxx xxxxx
-// Purpose: This is the main program that edits photos
+// Purpose: This program enlarges the selected 
+//          quarter of the photo being edited. 
+//          The final photo is still 256 x 256.
+
 
 #include <iostream>
 #include <fstream>
@@ -15,10 +18,7 @@
 #include "bmplib.cpp"
 
 void loadImage ();
-string Options();
 void saveImage();
-void invertImage();
-void rotateImage();
 void enlargeImage();
 void copyImage();
 
@@ -27,16 +27,10 @@ unsigned char image[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
 
 int main(){
-    cout << "Welcome User! \n";
     loadImage();
-    string operation, exit;
-    operation = "1";
-    exit = "0";
-    while(operation != exit){
-        operation = Options();
-        cout << operation << "\n";
-    }
-
+    copyImage();
+    enlargeImage();
+    saveImage();
 }
 
 void loadImage () {
@@ -50,81 +44,6 @@ void loadImage () {
    readGSBMP(imageFileName, image);
 }
 
-string Options(){
-    string option;
-    string line;
-    fstream menu("Menu.txt");  // Menu.txt contains the options of filters to choose from
-    while(getline(menu, line)){   //This reads the menu file and displays it
-        cout << line << "\n";
-
-    }
-    menu.close();
-    bool invalid = 0;
-    cin >> option;
-    do
-    {
-        if (option == "1")
-        {
-            /* code */
-        }else if (option == "2")
-        {
-            invertImage();
-        }else if (option == "3")
-        {
-            /* code */
-        }else if (option == "4")
-        {
-            /* code */
-        }else if (option == "5")
-        {
-            rotateImage();
-        }else if (option == "6")
-        {
-            /* code */
-        }else if (option == "7")
-        {
-            /* code */
-        }else if (option == "8")
-        {
-            /* code */
-        }else if (option == "9")
-        {
-            /* code */
-        }else if (option == "a")
-        {
-            /* code */
-        }else if (option == "b")
-        {
-            /* code */
-        }else if (option == "c")
-        {
-            /* code */
-        }else if (option == "d")
-        {
-            /* code */
-        }else if (option == "e")
-        {
-            /* code */
-        }else if (option == "f")
-        {
-            /* code */
-        }else if (option == "s")
-        {
-            saveImage();
-        }else if (option == "0")
-        {
-            /* code */
-        }else{
-            invalid = 1;
-            cout << "Sorry! Invalid option. Please choose a correct option.\n";
-            cin >> option;
-        }
-     
-    } while (invalid);
-    
-    return option;
-
-}
 
 void saveImage() {
    char imageFileName[100];
@@ -137,7 +56,6 @@ void saveImage() {
    strcat (imageFileName, ".bmp");
    writeGSBMP(imageFileName, image);
 }
-
 
 void copyImage(){       //This is to perserve the original data
     for (int i = 0; i < SIZE; i++)
