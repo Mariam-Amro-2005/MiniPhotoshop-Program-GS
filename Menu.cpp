@@ -189,7 +189,7 @@ void invertImage() {
     }
 }
 
-void rotateImage() {
+void rotateImage() { // rotating
     int temp, degree;
     string direction, compare;
     compare = "anticlockwise";
