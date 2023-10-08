@@ -12,11 +12,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb2d0a39-d670-4cbe-91b7-9c60ba966ebc" name="Changes" comment="commit">
-      <change beforePath="$PROJECT_DIR$/.idea/MiniPhotoshop-Program-GS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MiniPhotoshop-Program-GS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Menu.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="eb2d0a39-d670-4cbe-91b7-9c60ba966ebc" name="Changes" comment="adding my two filters" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -130,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696806402633</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="adding my two filters">
+      <option name="closed" value="true" />
+      <created>1696808571355</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1696808571356</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +166,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="adding my two filters" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding my two filters" />
   </component>
 </project>
