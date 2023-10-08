@@ -13,12 +13,17 @@
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
+unsigned char ImageGs[SIZE][SIZE];
+unsigned char ImageGs2[256][SIZE];
+unsigned char ImageGs1[SIZE][SIZE];
 
+std :: string name,ord,path="\\photos\\",path2="\\photos\\",path3="\\photos\\" ;
 void loadImage ();
 string Options();
 void saveImage();
 void invertImage();
 void rotateImage();
+void MergePhotos();
 void enlargeImage();
 void copyImage();
 
@@ -71,7 +76,7 @@ string Options(){
             invertImage();
         }else if (option == "3")
         {
-            /* code */
+            MergePhotos();
         }else if (option == "4")
         {
             /* code */
@@ -218,5 +223,19 @@ void rotateImage() {
             }
         }
     }
-
+}
+void MergePhotos(){
+    std ::string  s;
+    std :: cout<<"Enter another photo: ";
+    std ::cin>>s;
+    path2+=s;
+    char cwd2 [PATH_MAX];
+    readGSBMP(strcat(getcwd(cwd2 , sizeof (cwd2)) , path2.c_str()) , ImageGs1 );
+    for (int i=0 ; i<SIZE ; ++i){
+        for (int j=0 ; j<SIZE ; ++j){
+            int t=ImageGs[i][j],n=ImageGs1[i][j];
+            int y = (t+n)/2;
+            ImageGs[i][j]=y;
+        }
+    }
 }
