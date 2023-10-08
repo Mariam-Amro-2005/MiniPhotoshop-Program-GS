@@ -21,10 +21,13 @@ void invertImage();
 void rotateImage();
 void enlargeImage();
 void copyImage();
+void BAW();
+void flip();
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
+unsigned char imaGS[SIZE][SIZE];
 
 int main(){
     cout << "Welcome User! \n";
@@ -65,7 +68,7 @@ string Options(){
     {
         if (option == "1")
         {
-            /* code */
+            BAW();
         }else if (option == "2")
         {
             invertImage();
@@ -74,7 +77,7 @@ string Options(){
             /* code */
         }else if (option == "4")
         {
-            /* code */
+            flip();
         }else if (option == "5")
         {
             rotateImage();
@@ -176,6 +179,47 @@ void enlargeImage(){
                                                                 // and two bits in adjacent columns.
         }
         
+    }
+
+}
+void BAW() {
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (imaGS[i][j] > 115)
+                imaGS[i][j] = 255;
+            else
+                imaGS[i][j] = 0;
+        }
+    }
+}
+void flip (){
+    cout << "what do you want flip the image horizontally or vertically ? ";
+    string s2;
+    cin >> s2;
+    if (s2[0]=='h')
+    {
+        for (int x = 0; x < SIZE; x++)
+        {
+            for (int y = 0; y < SIZE / 2; y++) {
+                int temp = imaGS[x][y];
+                imaGS[x][y] = imaGS[x][SIZE - y];
+                imaGS[x][SIZE - y] = temp;
+            }
+        }
+    }
+    else if (s2[0]=='v')
+    {
+        for (int x = 0; x < SIZE/2; x++) //width
+        {
+            for (int y = 0; y < SIZE; y++)
+            {
+                int temp = imaGS[x][y];
+                imaGS[x][y] = imaGS[SIZE-x][y];
+                imaGS[SIZE-x][y] = temp;
+            }
+        }
     }
 
 }
