@@ -59,7 +59,7 @@ string Options(){
 
     }
     menu.close();
-    bool invalid = 0;
+    bool isInvalid = 0;
     cin >> option;
     do
     {
@@ -77,16 +77,17 @@ string Options(){
             /* code */
         }else if (option == "5")
         {
-            rotateImage();
+            /* code */
         }else if (option == "6")
         {
-            /* code */
+            rotateImage();
         }else if (option == "7")
         {
             /* code */
         }else if (option == "8")
         {
-            /* code */
+            copyImage();
+            enlargeImage();
         }else if (option == "9")
         {
             /* code */
@@ -111,16 +112,19 @@ string Options(){
         }else if (option == "s")
         {
             saveImage();
+        }else if (option == "l")
+        {
+            loadImage();
         }else if (option == "0")
         {
             /* code */
         }else{
-            invalid = 1;
+            isInvalid = 1;
             cout << "Sorry! Invalid option. Please choose a correct option.\n";
             cin >> option;
         }
      
-    } while (invalid);
+    } while (isInvalid);
     
     return option;
 
