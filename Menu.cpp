@@ -4,7 +4,6 @@
 // Author1 and ID and Group:	xxxxx xxxxx
 // Author2 and ID and Group:	Mariam Amro 20221217
 // Author3 and ID and Group:	xxxxx xxxxx
-// Teaching Assistant:		xxxxx xxxxx
 // Purpose: This is the main program that edits photos
 
 #include <iostream>
@@ -21,10 +20,13 @@ void invertImage();
 void rotateImage();
 void enlargeImage();
 void copyImage();
+void BAW();
+void flip();
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
+unsigned char imaGS[SIZE][SIZE];
 
 int main(){
     cout << "Welcome User! \n";
@@ -34,7 +36,6 @@ int main(){
     exit = "0";
     while(operation != exit){
         operation = Options();
-        cout << operation << "\n";
     }
 
 }
@@ -65,7 +66,7 @@ string Options(){
     {
         if (option == "1")
         {
-            /* code */
+            BAW();
         }else if (option == "2")
         {
             invertImage();
@@ -74,7 +75,7 @@ string Options(){
             /* code */
         }else if (option == "4")
         {
-            /* code */
+            flip();
         }else if (option == "5")
         {
             /* code */
@@ -219,6 +220,49 @@ void rotateImage() { // rotating
                 temp = image[i][j];
                 image[i][j] = image[SIZE-j-1][SIZE-i-1];
                 image[SIZE-j-1][SIZE-i-1] = temp;
+            }
+        }
+    }
+
+}
+
+void BAW(){
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image[i][j] > 115)
+                image[i][j] = 255;
+            else
+                image[i][j] = 0;
+        }
+    }
+}
+
+void flip(){
+    cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
+    string s2;
+    cin >> s2;
+    if (s2[0]=='h')
+    {
+        for (int x = 0; x < SIZE; x++)
+        {
+            for (int y = 0; y < SIZE / 2; y++) {
+                int temp = image[x][y];
+                image[x][y] = image[x][SIZE - y];
+                image[x][SIZE - y] = temp;
+            }
+        }
+    }
+    else if (s2[0]=='v')
+    {
+        for (int x = 0; x < SIZE/2; x++) //width
+        {
+            for (int y = 0; y < SIZE; y++)
+            {
+                int temp = image[x][y];
+                image[x][y] = image[SIZE-x][y];
+                image[SIZE-x][y] = temp;
             }
         }
     }
