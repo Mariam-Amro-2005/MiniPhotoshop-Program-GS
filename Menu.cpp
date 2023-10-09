@@ -1,10 +1,9 @@
 // FCAI – OOP Programming – 2023 - Assignment 1 
-// Program Name:				RotatingFilter.cpp
-// Last Modification Date:	6/10/2023
+// Program Name:				Menu.cpp
+// Last Modification Date:	8/10/2023
 // Author1 and ID and Group:	xxxxx xxxxx
 // Author2 and ID and Group:	Mariam Amro 20221217
 // Author3 and ID and Group:	xxxxx xxxxx
-// Teaching Assistant:		xxxxx xxxxx
 // Purpose: This is the main program that edits photos
 
 #include <iostream>
@@ -37,7 +36,6 @@ int main(){
     exit = "0";
     while(operation != exit){
         operation = Options();
-        cout << operation << "\n";
     }
 
 }
@@ -62,7 +60,7 @@ string Options(){
 
     }
     menu.close();
-    bool invalid = 0;
+    bool isInvalid = 0;
     cin >> option;
     do
     {
@@ -80,16 +78,17 @@ string Options(){
             flip();
         }else if (option == "5")
         {
-            rotateImage();
+            /* code */
         }else if (option == "6")
         {
-            /* code */
+            rotateImage();
         }else if (option == "7")
         {
             /* code */
         }else if (option == "8")
         {
-            /* code */
+            copyImage();
+            enlargeImage();
         }else if (option == "9")
         {
             /* code */
@@ -114,17 +113,19 @@ string Options(){
         }else if (option == "s")
         {
             saveImage();
-
+        }else if (option == "l")
+        {
+            loadImage();
         }else if (option == "0")
         {
             /* code */
         }else{
-            invalid = 1;
+            isInvalid = 1;
             cout << "Sorry! Invalid option. Please choose a correct option.\n";
             cin >> option;
         }
-
-    } while (invalid);
+     
+    } while (isInvalid);
     
     return option;
 
@@ -161,7 +162,7 @@ void enlargeImage(){
     cin >> quarter;
     x = y = 0;
     if (quarter == 4)       //Assigning a value to x and y to adjust the for 
-    {                       //loop according to quarter choosen
+    {                       //loop according to quarter chosen
         x = y = 128;
     }else if (quarter == 3)
     {
@@ -182,28 +183,75 @@ void enlargeImage(){
     }
 
 }
+
+
+void invertImage() {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++) {
+
+            image[i][j] = 255 - image[i][j]; // Subtracting original value from 255 to get inverse colour
+        }
+
+    }
+}
+
+void rotateImage() { // rotating
+    int temp, degree;
+    string direction, compare;
+    compare = "anticlockwise";
+    cout << "Please choose which degree of rotation: ";
+    cin >> degree;
+    cout << "Please choose the direction of rotation - (c)lockwise or (a)nticlockwise: "; // anticlockwise in x degrees is the same as clockwise (360 - x) degrees
+    cin >> direction;
+    if (direction[0] == compare[0])
+    {
+        degree = 360 - degree;
+    }
+    for (int k = 0; k < (degree/90); k++)
+    {
+        for(int i = 0; i < SIZE ; ++i){   // This mirrors the array from the middle to change the direction of the principal diagonal to become the off diagonal
+            for(int j = 0; j <SIZE/2; ++j){  //Also make it easier to swap cell contents
+                temp = image[i][j];
+                image[i][j] = image[i][SIZE-j-1];
+                image[i][SIZE-j-1] = temp;
+            }
+        }
+        for(int i = 0; i < SIZE ; ++i){   // This swaps the cell contents into their final place
+            for(int j = 0; j < SIZE-i-1; ++j){
+                temp = image[i][j];
+                image[i][j] = image[SIZE-j-1][SIZE-i-1];
+                image[SIZE-j-1][SIZE-i-1] = temp;
+            }
+        }
+    }
+
+}
+
 //purpose:
 // In this filter, we convert the image to black and white by:
 // If the pixel that I am standing on is larger than 115
 // I will turn it to white, if less, I will turn it to black.
-void BAW() {
+
+void BAW(){
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
 
-            if (imaGS[i][j] > 115)
-                imaGS[i][j] = 255;
+            if (image[i][j] > 115)
+                image[i][j] = 255;
             else
-                imaGS[i][j] = 0;
+                image[i][j] = 0;
         }
     }
 }
+
 //purpose:
 // In this filter, we flip the image according to the user’s choice...
 // If he requests to flip the image vertically or horizontally
 //we will fulfill his request through these function.
-void flip (){
-    cout << "what do you want flip the image horizontally or vertically ? ";
+
+void flip(){
+    cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
     string s2;
     cin >> s2;
     if (s2[0]=='h')
@@ -211,9 +259,9 @@ void flip (){
         for (int x = 0; x < SIZE; x++)
         {
             for (int y = 0; y < SIZE / 2; y++) {
-                int temp = imaGS[x][y];
-                imaGS[x][y] = imaGS[x][SIZE - y];
-                imaGS[x][SIZE - y] = temp;
+                int temp = image[x][y];
+                image[x][y] = image[x][SIZE - y];
+                image[x][SIZE - y] = temp;
             }
         }
     }
@@ -223,9 +271,9 @@ void flip (){
         {
             for (int y = 0; y < SIZE; y++)
             {
-                int temp = imaGS[x][y];
-                imaGS[x][y] = imaGS[SIZE-x][y];
-                imaGS[SIZE-x][y] = temp;
+                int temp = image[x][y];
+                image[x][y] = image[SIZE-x][y];
+                image[SIZE-x][y] = temp;
             }
         }
     }

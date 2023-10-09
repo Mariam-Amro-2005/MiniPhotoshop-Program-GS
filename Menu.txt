@@ -15,5 +15,6 @@ c-Blur Image
 d-Crop Image
 e-Skew Image Right  
 f-Skew Image Up  
-s- Save the image to a file
+s-Save the image to a file
+l-Load new image
 0-Exit
