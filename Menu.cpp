@@ -184,6 +184,7 @@ void enlargeImage(){
 
 }
 
+
 void invertImage() {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j< SIZE; j++) {
@@ -226,6 +227,11 @@ void rotateImage() { // rotating
 
 }
 
+//purpose:
+// In this filter, we convert the image to black and white by:
+// If the pixel that I am standing on is larger than 115
+// I will turn it to white, if less, I will turn it to black.
+
 void BAW(){
 
     for (int i = 0; i < SIZE; i++) {
@@ -238,6 +244,11 @@ void BAW(){
         }
     }
 }
+
+//purpose:
+// In this filter, we flip the image according to the user’s choice...
+// If he requests to flip the image vertically or horizontally
+//we will fulfill his request through these function.
 
 void flip(){
     cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
