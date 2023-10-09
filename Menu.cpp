@@ -18,6 +18,9 @@ string Options();
 void saveImage();
 void invertImage();
 void rotateImage();
+
+void MergePhotos();
+void Dark_Light();
 void enlargeImage();
 void copyImage();
 void BAW();
@@ -78,7 +81,7 @@ string Options(){
             flip();
         }else if (option == "5")
         {
-            /* code */
+            Dark_Light();
         }else if (option == "6")
         {
             rotateImage();
@@ -245,6 +248,40 @@ void BAW(){
     }
 }
 
+void Dark_Light(){
+    std :: string k;
+    std :: cout<<"option(D or L ): ";
+    std :: cin>>k;
+    if (k == "D") {
+        for (int i=0 ; i<SIZE ; ++i){
+            for (int j=0 ; j<SIZE ; ++j){
+                int num=ImageGs[i][j];
+                int t=(255-num)/2;
+                num-=t;
+                if (num <= 0)
+                    ImageGs[i][j]=0;
+                else{
+                    ImageGs[i][j]=(num);}
+
+            }
+        }
+    }
+    else if (k == "L"){
+        for (int i=0 ; i<SIZE ; ++i){
+            for (int j=0 ; j<SIZE ; ++j){
+                int num=ImageGs[i][j];
+                int t=(255-num)/2;
+                num +=t;
+                if (num >= 255)
+                    ImageGs[i][j]=255;
+                else{
+                    ImageGs[i][j]=num;
+                }
+            }
+        }
+    }
+}
+
 //purpose:
 // In this filter, we flip the image according to the user’s choice...
 // If he requests to flip the image vertically or horizontally
@@ -280,4 +317,4 @@ void flip(){
 
 }
 
-//added new comment
+
