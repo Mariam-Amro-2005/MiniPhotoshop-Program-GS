@@ -12,10 +12,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb2d0a39-d670-4cbe-91b7-9c60ba966ebc" name="Changes" comment="first commit">
+    <list default="true" id="eb2d0a39-d670-4cbe-91b7-9c60ba966ebc" name="Changes" comment="commit&#10;adding merge filter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Menu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Menu.exe" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +103,14 @@
       <option name="project" value="LOCAL" />
       <updated>1696630199334</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="commit&#10;adding merge filter">
+      <created>1696803686511</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1696803686511</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +141,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="commit&#10;adding merge filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit&#10;adding merge filter" />
   </component>
 </project>

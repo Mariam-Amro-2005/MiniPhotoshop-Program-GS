@@ -24,6 +24,7 @@ void saveImage();
 void invertImage();
 void rotateImage();
 void MergePhotos();
+void Dark_Light();
 void enlargeImage();
 void copyImage();
 
@@ -85,7 +86,8 @@ string Options(){
             rotateImage();
         }else if (option == "6")
         {
-            /* code */
+            Dark_Light();
+
         }else if (option == "7")
         {
             /* code */
@@ -236,6 +238,39 @@ void MergePhotos(){
             int t=ImageGs[i][j],n=ImageGs1[i][j];
             int y = (t+n)/2;
             ImageGs[i][j]=y;
+        }
+    }
+}
+void Dark_Light(){
+    std :: string k;
+    std :: cout<<"option(D or L ): ";
+    std :: cin>>k;
+    if (k == "D") {
+        for (int i=0 ; i<SIZE ; ++i){
+            for (int j=0 ; j<SIZE ; ++j){
+                int num=ImageGs[i][j];
+                int t=(255-num)/2;
+                num-=t;
+                if (num <= 0)
+                    ImageGs[i][j]=0;
+                else{
+                    ImageGs[i][j]=(num);}
+
+            }
+        }
+    }
+    else if (k == "L"){
+        for (int i=0 ; i<SIZE ; ++i){
+            for (int j=0 ; j<SIZE ; ++j){
+                int num=ImageGs[i][j];
+                int t=(255-num)/2;
+                num +=t;
+                if (num >= 255)
+                    ImageGs[i][j]=255;
+                else{
+                    ImageGs[i][j]=num;
+                }
+            }
         }
     }
 }
