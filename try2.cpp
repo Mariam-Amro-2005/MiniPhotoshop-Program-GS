@@ -1,3 +1,22 @@
+/*#include <iostream>
+#include "bmplib.cpp"
+#include <cstdio> 
+#include <algorithm>
+#include <string>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int num;
+    cout << "2\n\n";
+    //freopen(“fruit.bmp”, “r”, stdin);
+
+    int readGSBMP(const char* filename, unsigned char image[][SIZE]);
+    //int writeGSBMP(const char* filename, unsigned char outputImage[][SIZE]);
+    return 0;
+}*/
+
 // Program: demo2.cpp
 // Purpose: Demonstrate use of bmplip for handling
 //          bmp colored and grayscale images
@@ -5,15 +24,6 @@
 // Author:  Mohammad El-Ramly
 // Date:    30 March 2018
 // Version: 1.0
-
-// FCAI – OOP Programming – 2023 - Assignment 1 
-// Program Name:				xxxxxx.cpp
-// Last Modification Date:	5/10/2023
-// Author1 and ID and Group:	xxxxx xxxxx
-// Author2 and ID and Group:	xxxxx xxxxx
-// Author3 and ID and Group:	xxxxx xxxxx
-// Teaching Assistant:		xxxxx xxxxx
-// Purpose:..........	
 
 #include <iostream>
 #include <fstream>
@@ -26,12 +36,12 @@ unsigned char image[SIZE][SIZE];
 
 void loadImage ();
 void saveImage ();
-void invertImage();
+void doSomethingForImage ();
 
 int main()
 {
   loadImage();
-  invertImage();
+  doSomethingForImage();
   saveImage();
   return 0;
 }
@@ -63,12 +73,24 @@ void saveImage () {
 }
 
 //_________________________________________
-void invertImage() {
+void doSomethingForImage() {
   for (int i = 0; i < SIZE; i++) {
     for (int j = 0; j< SIZE; j++) {
+        //int temp = image[i][j];
+        //cout << temp << " || ";
+        image[i][j] = 255 - image[i][j];
 
-        image[i][j] = 255 - image[i][j]; // Subtracting original value from 255 to get inverse colour
+/* Example code to convert to BW the image
+   A better version should NOt use 127 but the
+   average of the pixels*/
+
+        /*if (image[i][j] > 127)
+            image[i][j] = 255;
+        else
+            image[i][j] = 0;*/
+
+// do something with the image
     }
-    
+    //cout << "\n\n";
   }
 }

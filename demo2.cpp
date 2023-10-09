@@ -57,6 +57,7 @@ void saveImage () {
 void doSomethingForImage() {
   for (int i = 0; i < SIZE; i++) {
     for (int j = 0; j< SIZE; j++) {
+      image[i][j] = 255 - image[i][j];
 
 /* Example code to convert to BW the image
    A better version should NOt use 127 but the

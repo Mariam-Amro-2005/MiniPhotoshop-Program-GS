@@ -1,10 +1,9 @@
 // FCAI – OOP Programming – 2023 - Assignment 1 
-// Program Name:				RotatingFilter.cpp
-// Last Modification Date:	6/10/2023
+// Program Name:				Menu.cpp
+// Last Modification Date:	8/10/2023
 // Author1 and ID and Group:	xxxxx xxxxx
 // Author2 and ID and Group:	Mariam Amro 20221217
 // Author3 and ID and Group:	xxxxx xxxxx
-// Teaching Assistant:		xxxxx xxxxx
 // Purpose: This is the main program that edits photos
 
 #include <iostream>
@@ -13,24 +12,24 @@
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
-unsigned char ImageGs[SIZE][SIZE];
-unsigned char ImageGs2[256][SIZE];
-unsigned char ImageGs1[SIZE][SIZE];
 
-std :: string name,ord,path="\\photos\\",path2="\\photos\\",path3="\\photos\\" ;
 void loadImage ();
 string Options();
 void saveImage();
 void invertImage();
 void rotateImage();
+
 void MergePhotos();
 void Dark_Light();
 void enlargeImage();
 void copyImage();
+void BAW();
+void flip();
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
+unsigned char imaGS[SIZE][SIZE];
 
 int main(){
     cout << "Welcome User! \n";
@@ -40,7 +39,6 @@ int main(){
     exit = "0";
     while(operation != exit){
         operation = Options();
-        cout << operation << "\n";
     }
 
 }
@@ -65,35 +63,35 @@ string Options(){
 
     }
     menu.close();
-    bool invalid = 0;
+    bool isInvalid = 0;
     cin >> option;
     do
     {
         if (option == "1")
         {
-            /* code */
+            BAW();
         }else if (option == "2")
         {
             invertImage();
         }else if (option == "3")
         {
-            MergePhotos();
+            /* code */
         }else if (option == "4")
         {
-            /* code */
+            flip();
         }else if (option == "5")
         {
-            rotateImage();
+            Dark_Light();
         }else if (option == "6")
         {
-            Dark_Light();
-
+            rotateImage();
         }else if (option == "7")
         {
             /* code */
         }else if (option == "8")
         {
-            /* code */
+            copyImage();
+            enlargeImage();
         }else if (option == "9")
         {
             /* code */
@@ -118,16 +116,19 @@ string Options(){
         }else if (option == "s")
         {
             saveImage();
+        }else if (option == "l")
+        {
+            loadImage();
         }else if (option == "0")
         {
             /* code */
         }else{
-            invalid = 1;
+            isInvalid = 1;
             cout << "Sorry! Invalid option. Please choose a correct option.\n";
             cin >> option;
         }
      
-    } while (invalid);
+    } while (isInvalid);
     
     return option;
 
@@ -186,6 +187,7 @@ void enlargeImage(){
 
 }
 
+
 void invertImage() {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j< SIZE; j++) {
@@ -196,7 +198,7 @@ void invertImage() {
     }
 }
 
-void rotateImage() {
+void rotateImage() { // rotating
     int temp, degree;
     string direction, compare;
     compare = "anticlockwise";
@@ -225,22 +227,27 @@ void rotateImage() {
             }
         }
     }
+
 }
-void MergePhotos(){
-    std ::string  s;
-    std :: cout<<"Enter another photo: ";
-    std ::cin>>s;
-    path2+=s;
-    char cwd2 [PATH_MAX];
-    readGSBMP(strcat(getcwd(cwd2 , sizeof (cwd2)) , path2.c_str()) , ImageGs1 );
-    for (int i=0 ; i<SIZE ; ++i){
-        for (int j=0 ; j<SIZE ; ++j){
-            int t=ImageGs[i][j],n=ImageGs1[i][j];
-            int y = (t+n)/2;
-            ImageGs[i][j]=y;
+
+//purpose:
+// In this filter, we convert the image to black and white by:
+// If the pixel that I am standing on is larger than 115
+// I will turn it to white, if less, I will turn it to black.
+
+void BAW(){
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image[i][j] > 115)
+                image[i][j] = 255;
+            else
+                image[i][j] = 0;
         }
     }
 }
+
 void Dark_Light(){
     std :: string k;
     std :: cout<<"option(D or L ): ";
@@ -274,3 +281,40 @@ void Dark_Light(){
         }
     }
 }
+
+//purpose:
+// In this filter, we flip the image according to the user’s choice...
+// If he requests to flip the image vertically or horizontally
+//we will fulfill his request through these function.
+
+void flip(){
+    cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
+    string s2;
+    cin >> s2;
+    if (s2[0]=='h')
+    {
+        for (int x = 0; x < SIZE; x++)
+        {
+            for (int y = 0; y < SIZE / 2; y++) {
+                int temp = image[x][y];
+                image[x][y] = image[x][SIZE - y];
+                image[x][SIZE - y] = temp;
+            }
+        }
+    }
+    else if (s2[0]=='v')
+    {
+        for (int x = 0; x < SIZE/2; x++) //width
+        {
+            for (int y = 0; y < SIZE; y++)
+            {
+                int temp = image[x][y];
+                image[x][y] = image[SIZE-x][y];
+                image[SIZE-x][y] = temp;
+            }
+        }
+    }
+
+}
+
+
