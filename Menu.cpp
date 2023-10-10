@@ -31,6 +31,7 @@ unsigned char image2[SIZE][SIZE];
 unsigned char imaGS[SIZE][SIZE];
 unsigned char ImageGs2[SIZE][SIZE];
 unsigned char ImageGs1[SIZE][SIZE];
+unsigned char ImageGs[SIZE][SIZE];
 
 std :: string name,ord,path="\\photos\\",path2="\\photos\\",path3="\\photos\\" ;
 
