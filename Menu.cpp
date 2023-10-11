@@ -24,6 +24,7 @@ void saveImage();
 void invertImage();
 void rotateImage();
 void MergePhotos();
+void Dark_Light();
 void enlargeImage();
 void copyImage();
 
@@ -85,7 +86,7 @@ string Options(){
             rotateImage();
         }else if (option == "6")
         {
-            /* code */
+             Dark_Light();
         }else if (option == "7")
         {
             /* code */
@@ -233,9 +234,42 @@ void MergePhotos(){
     readGSBMP(strcat(getcwd(cwd2 , sizeof (cwd2)) , path2.c_str()) , ImageGs1 );
     for (int i=0 ; i<SIZE ; ++i){
         for (int j=0 ; j<SIZE ; ++j){
-            int t=ImageGs[i][j],n=ImageGs1[i][j];
+            int t=ImageGs[i][j],n=ImageGs1[i][j];// this take the num of pixl in image1 and image2 and take the average
             int y = (t+n)/2;
-            ImageGs[i][j]=y;
+            ImageGs[i][j]=y; // put the averge in pixl in image1
+        }
+    }
+}
+void Dark_Light(){
+    std :: string k;
+    std :: cout<<"option(D or L ): ";
+    std :: cin>>k; //take option from user dark or light
+    if (k == "D") { // if dark
+        for (int i=0 ; i<SIZE ; ++i){
+            for (int j=0 ; j<SIZE ; ++j){
+                int num=ImageGs[i][j]; // find the degree of pixl
+                int t=(255-num)/2; // find  average of inverse degree
+                num-=t; // make the degree of pixl = first degree - average
+                if (num <= 0)
+                    ImageGs[i][j]=0; // if num devolve to 0 or smaller make if 0
+                else{
+                    ImageGs[i][j]=(num);} // else make it = new degree
+
+            }
+        }
+    }
+    else if (k == "L"){ // if light
+        for (int i=0 ; i<SIZE ; ++i){
+            for (int j=0 ; j<SIZE ; ++j){
+                int num=ImageGs[i][j]; // find the degree of pixl
+                int t=(255-num)/2;// find  average of inverse degree
+                num +=t; // make new  degree =  first degree - average
+                if (num >= 255) // if new degree became out of scope make it 255
+                    ImageGs[i][j]=255;
+                else{
+                    ImageGs[i][j]=num; // else make it new degree
+                }
+            }
         }
     }
 }
