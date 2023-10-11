@@ -2,7 +2,9 @@
 // Program Name:				Menu.cpp
 // Last Modification Date:	8/10/2023
 // Author1 and ID :	    Donia Kareem Mohammed 20221051
+// Email: dodi382004@gmail.com
 // Author2 and ID :	    Mariam Amro Ahmed 20221217
+// Email: 11410120221217@stud.cu.edu.eg,  mariam.seifeldin.2005@gmail.com
 // Author3 and ID :	    Menna 2022xx
 // Purpose: This is the main program that edits photos 
 //          and contains all the filters available.
