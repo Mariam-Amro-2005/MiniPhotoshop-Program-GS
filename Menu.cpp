@@ -1,17 +1,18 @@
-// FCAI – OOP Programming – 2023 - Assignment 1 
+// FCAI – OOP Programming – 2023 - Assignment 1
 // Program Name:				Menu.cpp
 // Last Modification Date:	8/10/2023
 // Author1 and ID :	    Donia Kareem Mohammed 20221051
-// Email: dodi382004@gmail.com
+// Email          :     dodi382004@gmail.com
 // Author2 and ID :	    Mariam Amro Ahmed 20221217
-// Email: 11410120221217@stud.cu.edu.eg,  mariam.seifeldin.2005@gmail.com
-// Author3 and ID :	    Menna 2022xx
-// Purpose: This is the main program that edits photos 
+// Email          :     11410120221217@stud.cu.edu.eg,  mariam.seifeldin.2005@gmail.com
+// Author3 and ID :	    Menna  Ali Abd Elbaky 20221168
+// Email          :     mennnakhatun4@gmail.com
+// Purpose: This is the main program that edits photos
 //          and contains all the filters available.
 
 #include <iostream>
 #include <fstream>
-#include <cstdio>  
+#include <cstdio>
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
@@ -51,19 +52,19 @@ int main(){
 }
 
 void loadImage () {
-   char imageFileName[100];
-   // Get gray scale image file name
-   cout << "Please enter file name of the image to process: ";
-   cin >> imageFileName;
+    char imageFileName[100];
+    // Get gray scale image file name
+    cout << "Please enter file name of the image to process: ";
+    cin >> imageFileName;
 
-   // Add to it .bmp extension and load image
-   strcat (imageFileName, ".bmp");
-   readGSBMP(imageFileName, image);
+    // Add to it .bmp extension and load image
+    strcat (imageFileName, ".bmp");
+    readGSBMP(imageFileName, image);
 }
 
 // Authors: Mariam Amro, Donia Kareem, Menna
 // Last Modification Date:	6/10/2023
-// Purpose: This function displays the filters that can be choosen  
+// Purpose: This function displays the filters that can be choosen
 //          and calls the functions. It allows the user to load, edit
 //          and save more than one image and then exit the program.
 
@@ -140,23 +141,23 @@ string Options(){
             cout << "Sorry! Invalid option. Please choose a correct option.\n";
             cin >> option;
         }
-     
+
     } while (isInvalid);
-    
+
     return option;
 
 }
 
 void saveImage() {
-   char imageFileName[100];
+    char imageFileName[100];
 
-   // Get gray scale image target file name
-   cout << "Enter the target image file name: ";
-   cin >> imageFileName;
+    // Get gray scale image target file name
+    cout << "Enter the target image file name: ";
+    cin >> imageFileName;
 
-   // Add to it .bmp extension and load image
-   strcat (imageFileName, ".bmp");
-   writeGSBMP(imageFileName, image);
+    // Add to it .bmp extension and load image
+    strcat (imageFileName, ".bmp");
+    writeGSBMP(imageFileName, image);
 }
 
 // Author: Mariam Amro
@@ -172,22 +173,22 @@ void copyImage(){       // This is to perserve the original data
         {
             image2[i][j] = image[i][j];
         }
-        
+
     }
-    
+
 }
 // Author: Mariam Amro
 // Last Modification Date:	8/10/2023
-// Purpose: This program enlarges the selected 
-//          quarter of the photo being edited. 
-//          The final photo is still 256 x 256. 
+// Purpose: This program enlarges the selected
+//          quarter of the photo being edited.
+//          The final photo is still 256 x 256.
 
 void enlargeImage(){
     int quarter, x, y;
     cout << "Which quarter would you like to enlarge - 1, 2, 3, or 4 ? ";
     cin >> quarter;
     x = y = 0;
-    if (quarter == 4)       // Assigning a value to x and y to adjust the for 
+    if (quarter == 4)       // Assigning a value to x and y to adjust the for
     {                       // loop according to quarter chosen
         x = y = 128;
     }else if (quarter == 3)
@@ -202,10 +203,10 @@ void enlargeImage(){
         for (int j = 0; j < SIZE; j++)
         {
             image[i][j] = image2[int(i / 2) + x][int(j / 2) + y];   // This assigns each cell/bit in the chosen quarter
-                                                                // four bits in the original image; two bits in a row
-                                                                // and two bits in adjacent columns.
+            // four bits in the original image; two bits in a row
+            // and two bits in adjacent columns.
         }
-        
+
     }
 
 }
@@ -229,7 +230,7 @@ void invertImage() {
 //          according to the degree choosen by the user.
 //          The degrees that can be chosen are: 90, 180, 270 and 360 degrees.
 
-void rotateImage() { 
+void rotateImage() {
     int temp, degree;
     string direction, compare;
     compare = "anticlockwise";
@@ -280,24 +281,24 @@ void BAW(){
     }
 }
 
-// Author: Menna
+// Author: Menna Ali Abd Elbaky
 // Last Modification Date:	9/10/2023
-// Purpose: 
+// Purpose:
 
 void Dark_Light(){
     std :: string k;
     std :: cout << "Would you like to (D)arken or (L)ighten your image? ";
-    std :: cin >> k;
-    if (k == "D" || k == "d" || k == "Darken" || k == "darken") {
+    std :: cin >> k; // input option
+    if (k == "D" || k == "d" || k == "Darken" || k == "darken") { // if  option is dark
         for (int i = 0 ; i < SIZE; ++i){
             for (int j = 0 ; j < SIZE; ++j){
-                int num = image[i][j];
-                int t=(255 - num) / 2;
-                num -= t;
+                int num = image[i][j]; // take degree of pixl
+                int t=(255 - num) / 2; // find average the inverse
+                num -= t; // pixl - = average
                 if (num <= 0)
-                    image[i][j] = 0;
+                    image[i][j] = 0; // if new degree became out of range make it = min degree
                 else{
-                    image[i][j] = (num);
+                    image[i][j] = (num); // else make it new degree
                 }
 
             }
@@ -306,13 +307,13 @@ void Dark_Light(){
     else if (k == "L" || k == "l" || k == "Lighten" || k == "lighten"){
         for (int i = 0 ; i < SIZE; ++i){
             for (int j = 0 ; j < SIZE; ++j){
-                int num = image[i][j];
-                int t = (255-  num) / 2;
-                num += t;
-                if (num >= 255)
+                int num = image[i][j]; // take degree of pixl
+                int t = (255-  num) / 2;// find average the inverse
+                num += t; // pixl + = average
+                if (num >= 255) // if new degree became out of range make it = min degree
                     image[i][j] = 255;
                 else{
-                    image[i][j] = num;
+                    image[i][j] = num; // else make it new degree
                 }
             }
         }
@@ -356,11 +357,11 @@ void flip(){
 
 }
 
-// Author: Menna
+// Author: Menna Ali Abd Elbaky
 // Last Modification Date:	9/10/2023
 // Purpose: Overlay two images together by adding the bit
 //          values at [i][j] for the two images and
-//          dividing it by half to create the new value 
+//          dividing it by half to create the new value
 //          for image[i][j].
 
 void MergePhotos(){
@@ -370,14 +371,13 @@ void MergePhotos(){
     std ::cin >> s;
     strcat (s, ".bmp");
     readGSBMP(s, ImageGs1);
-    
+
     for (int i=0 ; i < SIZE; ++i){
         for (int j = 0 ; j < SIZE; ++j){
-            int t = image[i][j];
-            int n = ImageGs1[i][j];
-            int y = (t + n) / 2;
-            image[i][j] = y;
+            int t = image[i][j]; // take degree of pixl of first image
+            int n = ImageGs1[i][j]; // take degree of pixl of image2
+            int y = (t + n) / 2; // find average of them
+            image[i][j] = y; // put the average in pixl in first image
         }
     }
 }
-
