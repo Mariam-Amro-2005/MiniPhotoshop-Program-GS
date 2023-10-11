@@ -1,10 +1,11 @@
 // FCAI – OOP Programming – 2023 - Assignment 1 
 // Program Name:				Menu.cpp
 // Last Modification Date:	8/10/2023
-// Author1 and ID and Group:	Donia Kareem Mohammed 20221051
-// Author2 and ID and Group:	Mariam Amro Ahmed 20221217
-// Author3 and ID and Group:	Menna 2022xx
-// Purpose: This is the main program that edits photos
+// Author1 and ID :	    Donia Kareem Mohammed 20221051
+// Author2 and ID :	    Mariam Amro Ahmed 20221217
+// Author3 and ID :	    Menna 2022xx
+// Purpose: This is the main program that edits photos 
+//          and contains all the filters available.
 
 #include <iostream>
 #include <fstream>
@@ -28,10 +29,10 @@ void flip();
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
-unsigned char imaGS[SIZE][SIZE];
-unsigned char ImageGs2[SIZE][SIZE];
+//unsigned char imaGS[SIZE][SIZE];
+//unsigned char ImageGs2[SIZE][SIZE];
 unsigned char ImageGs1[SIZE][SIZE];
-unsigned char ImageGs[SIZE][SIZE];
+//unsigned char ImageGs[SIZE][SIZE];
 
 std :: string name,ord,path="\\photos\\",path2="\\photos\\",path3="\\photos\\" ;
 
@@ -97,32 +98,32 @@ string Options(){
             rotateImage();
         }else if (option == "7")
         {
-            /* code */
+            continue;
         }else if (option == "8")
         {
             copyImage();
             enlargeImage();
         }else if (option == "9")
         {
-            /* code */
+            continue;
         }else if (option == "a")
         {
-            /* code */
+            continue;
         }else if (option == "b")
         {
-            /* code */
+            continue;
         }else if (option == "c")
         {
-            /* code */
+            continue;
         }else if (option == "d")
         {
-            /* code */
+            continue;
         }else if (option == "e")
         {
-            /* code */
+            continue;
         }else if (option == "f")
         {
-            /* code */
+            continue;
         }else if (option == "s")
         {
             saveImage();
@@ -198,7 +199,7 @@ void enlargeImage(){
     {
         for (int j = 0; j < SIZE; j++)
         {
-            image[i][j] = image2[int(i/2) + x][int(j/2) + y];   // This assigns each cell/bit in the chosen quarter
+            image[i][j] = image2[int(i / 2) + x][int(j / 2) + y];   // This assigns each cell/bit in the chosen quarter
                                                                 // four bits in the original image; two bits in a row
                                                                 // and two bits in adjacent columns.
         }
@@ -238,20 +239,20 @@ void rotateImage() {
     {
         degree = 360 - degree;
     }
-    for (int k = 0; k < (degree/90); k++)
+    for (int k = 0; k < (degree / 90); k++)
     {
-        for(int i = 0; i < SIZE ; ++i){   // This mirrors the array from the middle to change the direction of the principal diagonal to become the off diagonal
-            for(int j = 0; j <SIZE/2; ++j){  //Also make it easier to swap cell contents
+        for(int i = 0; i < SIZE; ++i){   // This mirrors the array from the middle to change the direction of the principal diagonal to become the off diagonal
+            for(int j = 0; j < (SIZE / 2); ++j){  //Also make it easier to swap cell contents
                 temp = image[i][j];
-                image[i][j] = image[i][SIZE-j-1];
-                image[i][SIZE-j-1] = temp;
+                image[i][j] = image[i][SIZE - j - 1];
+                image[i][SIZE - j - 1] = temp;
             }
         }
         for(int i = 0; i < SIZE ; ++i){   // This swaps the cell contents into their final place
-            for(int j = 0; j < SIZE-i-1; ++j){
+            for(int j = 0; j < (SIZE - i - 1); ++j){
                 temp = image[i][j];
-                image[i][j] = image[SIZE-j-1][SIZE-i-1];
-                image[SIZE-j-1][SIZE-i-1] = temp;
+                image[i][j] = image[SIZE - j - 1][SIZE - i - 1];
+                image[SIZE - j - 1][SIZE - i - 1] = temp;
             }
         }
     }
@@ -278,37 +279,38 @@ void BAW(){
 }
 
 // Author: Menna
-// Last Modification Date:	x/10/2023
-// Purpose:
+// Last Modification Date:	9/10/2023
+// Purpose: 
 
 void Dark_Light(){
     std :: string k;
-    std :: cout<<"option(D or L ): ";
-    std :: cin>>k;
-    if (k == "D") {
-        for (int i=0 ; i<SIZE ; ++i){
-            for (int j=0 ; j<SIZE ; ++j){
-                int num=ImageGs[i][j];
-                int t=(255-num)/2;
-                num-=t;
+    std :: cout << "Would you like to (D)arken or (L)ighten your image? ";
+    std :: cin >> k;
+    if (k == "D" || k == "d" || k == "Darken" || k == "darken") {
+        for (int i = 0 ; i < SIZE; ++i){
+            for (int j = 0 ; j < SIZE; ++j){
+                int num = image[i][j];
+                int t=(255 - num) / 2;
+                num -= t;
                 if (num <= 0)
-                    ImageGs[i][j]=0;
+                    image[i][j] = 0;
                 else{
-                    ImageGs[i][j]=(num);}
+                    image[i][j] = (num);
+                }
 
             }
         }
     }
-    else if (k == "L"){
-        for (int i=0 ; i<SIZE ; ++i){
-            for (int j=0 ; j<SIZE ; ++j){
-                int num=ImageGs[i][j];
-                int t=(255-num)/2;
-                num +=t;
+    else if (k == "L" || k == "l" || k == "Lighten" || k == "lighten"){
+        for (int i = 0 ; i < SIZE; ++i){
+            for (int j = 0 ; j < SIZE; ++j){
+                int num = image[i][j];
+                int t = (255-  num) / 2;
+                num += t;
                 if (num >= 255)
-                    ImageGs[i][j]=255;
+                    image[i][j] = 255;
                 else{
-                    ImageGs[i][j]=num;
+                    image[i][j] = num;
                 }
             }
         }
@@ -326,7 +328,7 @@ void flip(){
     cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
     string s2;
     cin >> s2;
-    if (s2[0]=='h')
+    if (s2[0] == 'h')
     {
         for (int x = 0; x < SIZE; x++)
         {
@@ -339,7 +341,7 @@ void flip(){
     }
     else if (s2[0]=='v')
     {
-        for (int x = 0; x < SIZE/2; x++) //width
+        for (int x = 0; x < SIZE / 2; x++) //width
         {
             for (int y = 0; y < SIZE; y++)
             {
@@ -353,23 +355,26 @@ void flip(){
 }
 
 // Author: Menna
-// Last Modification Date:	x/10/2023
-// Purpose:
+// Last Modification Date:	9/10/2023
+// Purpose: Overlay two images together by adding the bit
+//          values at [i][j] for the two images and
+//          dividing it by half to create the new value 
+//          for image[i][j].
 
 void MergePhotos(){
-    std ::string  s;
-    //char s[100];
-    std :: cout<<"Enter another photo: ";
-    std ::cin>>s;
-    path2+=s;
-    char cwd2 [PATH_MAX];
-    readGSBMP(strcat(getcwd(cwd2 , sizeof (cwd2)) , path2.c_str()) , ImageGs1 );
-    //readGSBMP(s, ImageGs1);
-    for (int i=0 ; i<SIZE ; ++i){
-        for (int j=0 ; j<SIZE ; ++j){
-            int t=image[i][j],n=ImageGs1[i][j];
-            int y = (t+n)/2;
-            image[i][j]=y;
+    //std ::string  s;
+    char s[100];
+    std :: cout << "Enter another photo: ";
+    std ::cin >> s;
+    strcat (s, ".bmp");
+    readGSBMP(s, ImageGs1);
+    
+    for (int i=0 ; i < SIZE; ++i){
+        for (int j = 0 ; j < SIZE; ++j){
+            int t = image[i][j];
+            int n = ImageGs1[i][j];
+            int y = (t + n) / 2;
+            image[i][j] = y;
         }
     }
 }
