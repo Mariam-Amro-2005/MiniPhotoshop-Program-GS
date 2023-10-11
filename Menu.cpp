@@ -1,10 +1,9 @@
 // FCAI – OOP Programming – 2023 - Assignment 1 
-// Program Name:				RotatingFilter.cpp
-// Last Modification Date:	6/10/2023
+// Program Name:				Menu.cpp
+// Last Modification Date:	8/10/2023
 // Author1 and ID and Group:	xxxxx xxxxx
 // Author2 and ID and Group:	Mariam Amro 20221217
 // Author3 and ID and Group:	xxxxx xxxxx
-// Teaching Assistant:		xxxxx xxxxx
 // Purpose: This is the main program that edits photos
 
 #include <iostream>
@@ -13,24 +12,26 @@
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
-unsigned char ImageGs[SIZE][SIZE];
-unsigned char ImageGs2[256][SIZE];
-unsigned char ImageGs1[SIZE][SIZE];
 
-std :: string name,ord,path="\\photos\\",path2="\\photos\\",path3="\\photos\\" ;
 void loadImage ();
 string Options();
 void saveImage();
 void invertImage();
 void rotateImage();
+<<<<<<<<< Temporary merge branch 1
+=========
 void MergePhotos();
 void Dark_Light();
+>>>>>>>>> Temporary merge branch 2
 void enlargeImage();
 void copyImage();
+void BAW();
+void flip();
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
+unsigned char imaGS[SIZE][SIZE];
 
 int main(){
     cout << "Welcome User! \n";
@@ -40,7 +41,6 @@ int main(){
     exit = "0";
     while(operation != exit){
         operation = Options();
-        cout << operation << "\n";
     }
 
 }
@@ -65,34 +65,40 @@ string Options(){
 
     }
     menu.close();
-    bool invalid = 0;
+    bool isInvalid = 0;
     cin >> option;
     do
     {
         if (option == "1")
         {
-            /* code */
+            BAW();
         }else if (option == "2")
         {
             invertImage();
         }else if (option == "3")
         {
-            MergePhotos();
+            /* code */
         }else if (option == "4")
         {
-            /* code */
+            flip();
         }else if (option == "5")
         {
-            rotateImage();
+            /* code */
         }else if (option == "6")
         {
-             Dark_Light();
+<<<<<<<<< Temporary merge branch 1
+            rotateImage();
+=========
+            Dark_Light();
+
+>>>>>>>>> Temporary merge branch 2
         }else if (option == "7")
         {
             /* code */
         }else if (option == "8")
         {
-            /* code */
+            copyImage();
+            enlargeImage();
         }else if (option == "9")
         {
             /* code */
@@ -117,16 +123,19 @@ string Options(){
         }else if (option == "s")
         {
             saveImage();
+        }else if (option == "l")
+        {
+            loadImage();
         }else if (option == "0")
         {
             /* code */
         }else{
-            invalid = 1;
+            isInvalid = 1;
             cout << "Sorry! Invalid option. Please choose a correct option.\n";
             cin >> option;
         }
      
-    } while (invalid);
+    } while (isInvalid);
     
     return option;
 
@@ -195,7 +204,7 @@ void invertImage() {
     }
 }
 
-void rotateImage() {
+void rotateImage() { // rotating
     int temp, degree;
     string direction, compare;
     compare = "anticlockwise";
@@ -224,52 +233,84 @@ void rotateImage() {
             }
         }
     }
+
 }
-void MergePhotos(){
-    std ::string  s;
-    std :: cout<<"Enter another photo: ";
-    std ::cin>>s;
-    path2+=s;
-    char cwd2 [PATH_MAX];
-    readGSBMP(strcat(getcwd(cwd2 , sizeof (cwd2)) , path2.c_str()) , ImageGs1 );
-    for (int i=0 ; i<SIZE ; ++i){
-        for (int j=0 ; j<SIZE ; ++j){
-            int t=ImageGs[i][j],n=ImageGs1[i][j];// this take the num of pixl in image1 and image2 and take the average
-            int y = (t+n)/2;
-            ImageGs[i][j]=y; // put the averge in pixl in image1
+
+void BAW(){
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image[i][j] > 115)
+                image[i][j] = 255;
+            else
+                image[i][j] = 0;
         }
     }
 }
+<<<<<<<<< Temporary merge branch 1
+
+void flip(){
+    cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
+    string s2;
+    cin >> s2;
+    if (s2[0]=='h')
+    {
+        for (int x = 0; x < SIZE; x++)
+        {
+            for (int y = 0; y < SIZE / 2; y++) {
+                int temp = image[x][y];
+                image[x][y] = image[x][SIZE - y];
+                image[x][SIZE - y] = temp;
+            }
+        }
+    }
+    else if (s2[0]=='v')
+    {
+        for (int x = 0; x < SIZE/2; x++) //width
+        {
+            for (int y = 0; y < SIZE; y++)
+            {
+                int temp = image[x][y];
+                image[x][y] = image[SIZE-x][y];
+                image[SIZE-x][y] = temp;
+            }
+        }
+    }
+
+}
+=========
 void Dark_Light(){
     std :: string k;
     std :: cout<<"option(D or L ): ";
-    std :: cin>>k; //take option from user dark or light
-    if (k == "D") { // if dark
+    std :: cin>>k;
+    if (k == "D") {
         for (int i=0 ; i<SIZE ; ++i){
             for (int j=0 ; j<SIZE ; ++j){
-                int num=ImageGs[i][j]; // find the degree of pixl
-                int t=(255-num)/2; // find  average of inverse degree
-                num-=t; // make the degree of pixl = first degree - average
+                int num=ImageGs[i][j];
+                int t=(255-num)/2;
+                num-=t;
                 if (num <= 0)
-                    ImageGs[i][j]=0; // if num devolve to 0 or smaller make if 0
+                    ImageGs[i][j]=0;
                 else{
-                    ImageGs[i][j]=(num);} // else make it = new degree
+                    ImageGs[i][j]=(num);}
 
             }
         }
     }
-    else if (k == "L"){ // if light
+    else if (k == "L"){
         for (int i=0 ; i<SIZE ; ++i){
             for (int j=0 ; j<SIZE ; ++j){
-                int num=ImageGs[i][j]; // find the degree of pixl
-                int t=(255-num)/2;// find  average of inverse degree
-                num +=t; // make new  degree =  first degree - average
-                if (num >= 255) // if new degree became out of scope make it 255
+                int num=ImageGs[i][j];
+                int t=(255-num)/2;
+                num +=t;
+                if (num >= 255)
                     ImageGs[i][j]=255;
                 else{
-                    ImageGs[i][j]=num; // else make it new degree
+                    ImageGs[i][j]=num;
                 }
             }
         }
     }
 }
+>>>>>>>>> Temporary merge branch 2
