@@ -2,9 +2,11 @@
 // Program Name:				Menu.cpp
 // Last Modification Date:	8/10/2023
 // Author1 and ID :	    Donia Kareem Mohammed 20221051
+// Email          :     dodi382004@gmail.com
 // Author2 and ID :	    Mariam Amro Ahmed 20221217
-// Author3 and ID :	    Menna  ali abd elbaky 20221168
-// email          :     mennnakhatun4@gmail.com
+// Email          :     11410120221217@stud.cu.edu.eg,  mariam.seifeldin.2005@gmail.com
+// Author3 and ID :	    Menna  Ali Abd Elbaky 20221168
+// Email          :     mennnakhatun4@gmail.com
 // Purpose: This is the main program that edits photos
 //          and contains all the filters available.
 
@@ -279,7 +281,7 @@ void BAW(){
     }
 }
 
-// Author: Menna ali abd elbaky
+// Author: Menna Ali Abd Elbaky
 // Last Modification Date:	9/10/2023
 // Purpose:
 
@@ -355,7 +357,7 @@ void flip(){
 
 }
 
-// Author: Menna ali abd elbaky
+// Author: Menna Ali Abd Elbaky
 // Last Modification Date:	9/10/2023
 // Purpose: Overlay two images together by adding the bit
 //          values at [i][j] for the two images and
