@@ -25,6 +25,7 @@ void Dark_Light();
 void enlargeImage();
 void copyImage();
 void Shrink ();
+void  Blur ();
 void BAW();
 void flip();
 
@@ -117,7 +118,7 @@ string Options(){
             continue;
         }else if (option == "c")
         {
-            continue;
+            Blur ();
         }else if (option == "d")
         {
             continue;
@@ -283,7 +284,7 @@ void BAW(){
 
 // Author: Menna ali abd elbaky
 // Last Modification Date:	9/10/2023
-// Purpose:
+// Purpose: to make image  extra dark or light
 
 void Dark_Light(){
     std :: string k;
@@ -381,50 +382,70 @@ void MergePhotos(){
         }
     }
 }
+// Author: Menna ali abd elbaky
+// Last Modification Date:	9/10/2023
+// Purpose: minimize the size of image
 void Shrink (){
     for (int i=0 ; i<SIZE ; ++i)
-        for (int j=0 ; j<SIZE ; ++j){
+        for (int j=0 ; j<SIZE ; ++j){ // make image2 == image1
             ImageGs2[i][j]=image[i][j];
         }
     for (int i=0 ; i<SIZE ; ++i)
-        for (int j=0 ; j<SIZE ; ++j){
+        for (int j=0 ; j<SIZE ; ++j){ // make image1 while image
             image[i][j]=255;
         }
     std :: cout<<"Enter the ratio: ";
     int n;
-    std :: cin>>n;
-    if (n == 2){
-        int row=0 , clm=0;
+    std :: cin>>n; // take the ratio of new image from user
+    if (n == 2){ // if ratio == 1/2
+        int row=0 , clm;
         for (int i=0 ; i<SIZE ; i+=2){
             clm=0;
             for (int j=0 ; j<SIZE ; j+=2){
-                image[row][clm]= ImageGs2[i][j];
+                image[row][clm]= ImageGs2[i][j]; // save pixel and skip pixel
                 clm++;
             }
             row++;
         }
     }
-    else if (n == 3){
+    else if (n == 3){ // if ratio == 1/3
         int m,y=0;
         for (int i=0 ; i<SIZE ; i+=3){
             m=0;
             for (int j=0 ; j<SIZE ; j+=3){
-                image[y][m]=ImageGs2[i][j];
+                image[y][m]=ImageGs2[i][j]; // save pixel and skip  three pixels
                 m++;
             }
             y++;
         }
     }
-    else if (n == 4){
+    else if (n == 4){ // if ratio == 1/4
         int y=0,m;
         for (int i=0 ; i<SIZE ; i+=4){
             m=0;
             for (int j=0 ; j<SIZE ; j+=4){
-                image[y][m]=ImageGs2[i][j];
+                image[y][m]=ImageGs2[i][j]; // save pixel and skip 4 pixels
                 m++;
             }
             y++;
         }
     }
 
+}
+// Author: Menna ali abd elbaky
+// Last Modification Date:	9/10/2023
+// Purpose: to make photo more  blural
+void  Blur (){
+    for (int i=2 ; i<SIZE-2 ; i++){
+        for (int j=2 ; j<SIZE-2 ; j++){ //take the degree of all pixels around the pixel that have been chosen
+            int f=image[i][j];          // and make all these pixels == the average of them
+            int sc=image[i][j+1],d=image[i+1][j], y=image[i][j-1],w=image[i-1][j];//4 d
+            int dw=image[i+1][j+1], r=image[i+1][j-1],t=image[i-1][j-1],p=image[i-1][j+1];//diagonal
+            long long nw=(f+sc+d+y+w+dw+r+t+p)/9;
+            image[i][j]=nw;
+            image[i][j+1]=nw,image[i+1][j]=nw ,image[i-1][j]=nw,image[i][j-1]=nw;//1
+            image[i-1][j+1]=nw,image[i+1][j+1]=nw ,image[i+1][j-1]=nw,image[i-1][j-1]=nw;//2
+
+        }
+    }
 }
