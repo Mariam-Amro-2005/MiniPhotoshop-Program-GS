@@ -24,12 +24,14 @@ void MergePhotos();
 void Dark_Light();
 void enlargeImage();
 void copyImage();
+void Shrink ();
 void BAW();
 void flip();
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
+unsigned char ImageGs2[SIZE][SIZE];
 //unsigned char imaGS[SIZE][SIZE];
 //unsigned char ImageGs2[SIZE][SIZE];
 unsigned char ImageGs1[SIZE][SIZE];
@@ -106,7 +108,7 @@ string Options(){
             enlargeImage();
         }else if (option == "9")
         {
-            continue;
+             Shrink ();
         }else if (option == "a")
         {
             continue;
@@ -378,4 +380,51 @@ void MergePhotos(){
             image[i][j] = y; // put the average in pixl in first image
         }
     }
+}
+void Shrink (){
+    for (int i=0 ; i<SIZE ; ++i)
+        for (int j=0 ; j<SIZE ; ++j){
+            ImageGs2[i][j]=image[i][j];
+        }
+    for (int i=0 ; i<SIZE ; ++i)
+        for (int j=0 ; j<SIZE ; ++j){
+            image[i][j]=255;
+        }
+    std :: cout<<"Enter the ratio: ";
+    int n;
+    std :: cin>>n;
+    if (n == 2){
+        int row=0 , clm=0;
+        for (int i=0 ; i<SIZE ; i+=2){
+            clm=0;
+            for (int j=0 ; j<SIZE ; j+=2){
+                image[row][clm]= ImageGs2[i][j];
+                clm++;
+            }
+            row++;
+        }
+    }
+    else if (n == 3){
+        int m,y=0;
+        for (int i=0 ; i<SIZE ; i+=3){
+            m=0;
+            for (int j=0 ; j<SIZE ; j+=3){
+                image[y][m]=ImageGs2[i][j];
+                m++;
+            }
+            y++;
+        }
+    }
+    else if (n == 4){
+        int y=0,m;
+        for (int i=0 ; i<SIZE ; i+=4){
+            m=0;
+            for (int j=0 ; j<SIZE ; j+=4){
+                image[y][m]=ImageGs2[i][j];
+                m++;
+            }
+            y++;
+        }
+    }
+
 }
