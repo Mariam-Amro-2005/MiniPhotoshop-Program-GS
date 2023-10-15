@@ -16,7 +16,7 @@
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
-// HFSAGLSK
+
 void loadImage ();
 string Options();
 void saveImage();
