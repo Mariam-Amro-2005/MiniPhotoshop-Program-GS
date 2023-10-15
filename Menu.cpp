@@ -28,6 +28,8 @@ void enlargeImage();
 void copyImage();
 void BAW();
 void flip();
+bool isEven(int n);
+void shuffleImage();
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
@@ -114,7 +116,7 @@ string Options(){
             continue;
         }else if (option == "b")
         {
-            continue;
+            shuffleImage();
         }else if (option == "c")
         {
             continue;
@@ -284,6 +286,8 @@ void BAW(){
 // Author: Menna Ali Abd Elbaky
 // Last Modification Date:	9/10/2023
 // Purpose:
+// This filter lightens or darkens the image
+// by changing the values of each pixel.
 
 void Dark_Light(){
     std :: string k;
@@ -382,3 +386,75 @@ void MergePhotos(){
     }
 }
 
+// Author: Mariam Amro Ahmed
+// Last Modification Date: 15/10/2023
+// Purpose:
+// This filter shuffles the order in which the quarters 
+// of the image are ordered according to the user's preference 
+// with the use of a copy of the image and increments 
+
+void shuffleImage(){
+
+    cout << "Please enter the order of the shuffle: ";
+    int order[4];
+    string input, space, ignore;
+    space = " ";
+    getline(cin, ignore);   // So it does not take the name of the file as input
+    getline(cin, input);
+    int j = 0;
+    for (int i = 0; i < input.length(); i++)    // Takes only the numbers form the input in 
+    {                                           // integer form an stores it in the array order
+        
+        if (input[i] != space[0])
+        {
+            string temp ="";
+            temp += input[i];
+            order[j] = stoi(temp);
+            j++;
+        }
+        
+    }
+    copyImage();    // Saves a copy to retrieve data from
+    int x, y;       // While the original is modified
+    x = y = 0;
+    for (int i = 0; i < SIZE; i++)      // x and y are the increments for i and j respectively.
+    {                                   // x and y are defined differntly according to the quarter
+        for (int j = 0; j < SIZE; j++)
+        {
+            if (i < 128)
+            {
+                if (j < 128)
+                {
+                    //Use order[0] for quarter 1    // Here x is either 0 if quarters 1 or 2 are 
+                    x = int(order[0] / 3) * 128;    // chosen or 128 if quarters 3 or 4 are chosen 
+                    y = isEven(order[0]) * 128;     // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
+                }else{
+                    //Use order[1] for quarter 2        // Here x is either 0 if quarters 1 or 2 are 
+                    x = int(order[1] / 3) * 128;        // chosen or 128 if quarters 3 or 4 are chosen 
+                    y  = ceil(order[1] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
+                }
+                
+            }else{
+                if (j < 128)
+                {
+                    //Use order[2] for quarter 3        // Here x is either 0 if quarters 3 or 4 are 
+                    x = (int(order[2] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
+                    y = isEven(order[2]) * 128;         // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
+                    
+                }else{
+                    //Use order[3] for quarter 4        // Here x is either 0 if quarters 3 or 4 are
+                    x = (int(order[3] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
+                    y  = ceil(order[3] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
+                }
+                
+            }
+            image[i][j] =  image2[(i + x)][(j + y)];
+        }
+        
+    }
+    
+}
+
+bool isEven(int n) {    // Function to check if the number is even or not
+    return (n % 2 == 0); 
+    } 
