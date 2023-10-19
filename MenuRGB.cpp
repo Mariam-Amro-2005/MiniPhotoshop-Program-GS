@@ -25,26 +25,17 @@ void rotateImage();
 void MergePhotos();
 void Dark_Light();
 void enlargeImage();
+void shuffleImage();
 void copyImage();
+bool isEven(int n);
 void BAW();
 void flip();
-void Mirror();
-void crop();
-void  detect();
-bool isEven(int n);
-void shuffleImage();
-void skewHorizontally();
-
 
 using namespace std;
-unsigned char image[SIZE][SIZE];
-unsigned char image2[SIZE][SIZE];
-//unsigned char imaGS[SIZE][SIZE];
-//unsigned char ImageGs2[SIZE][SIZE];
-unsigned char ImageGs1[SIZE][SIZE];
-//unsigned char ImageGs[SIZE][SIZE];
+unsigned char image[SIZE][SIZE][RGB];
+unsigned char image2[SIZE][SIZE][RGB];
+unsigned char ImageGs1[SIZE][SIZE][RGB];
 
-std :: string name,ord,path="\\photos\\",path2="\\photos\\",path3="\\photos\\" ;
 
 int main(){
     cout << "Welcome User! \n";
@@ -60,13 +51,13 @@ int main(){
 
 void loadImage () {
     char imageFileName[100];
-    // Get gray scale image file name
+    // Get RGB image file name
     cout << "Please enter file name of the image to process: ";
     cin >> imageFileName;
 
     // Add to it .bmp extension and load image
     strcat (imageFileName, ".bmp");
-    readGSBMP(imageFileName, image);
+    readRGBBMP(imageFileName, image);
 }
 
 // Authors: Mariam Amro, Donia Kareem, Menna
@@ -108,7 +99,7 @@ string Options(){
             rotateImage();
         }else if (option == "7")
         {
-            detect();
+            continue;
         }else if (option == "8")
         {
             copyImage();
@@ -118,19 +109,19 @@ string Options(){
             continue;
         }else if (option == "a")
         {
-           Mirror();
+            continue;
         }else if (option == "b")
         {
-            shuffleImage();
+           shuffleImage();
         }else if (option == "c")
         {
             continue;
         }else if (option == "d")
         {
-            crop();
+            continue;
         }else if (option == "e")
         {
-            skewHorizontally();
+            continue;
         }else if (option == "f")
         {
             continue;
@@ -158,17 +149,17 @@ string Options(){
 void saveImage() {
     char imageFileName[100];
 
-    // Get gray scale image target file name
+    // Get RGB image target file name
     cout << "Enter the target image file name: ";
     cin >> imageFileName;
 
     // Add to it .bmp extension and load image
     strcat (imageFileName, ".bmp");
-    writeGSBMP(imageFileName, image);
+    writeRGBBMP(imageFileName, image);
 }
 
 // Author: Mariam Amro
-// Last Modification Date:	8/10/2023
+// Last Modification Date:	16/10/2023
 // Purpose: This program provides a copy of the image
 //          and stores it in another array. The new array
 //          is used by other filters such as the enlarging filter.
@@ -178,14 +169,18 @@ void copyImage(){       // This is to perserve the original data
     {
         for (int j = 0; j < SIZE; j++)
         {
-            image2[i][j] = image[i][j];
+            for (int k = 0; k < RGB ; k++)
+            {
+                image2[i][j][k] = image[i][j][k];
+            }
+            
         }
 
     }
 
 }
 // Author: Mariam Amro
-// Last Modification Date:	8/10/2023
+// Last Modification Date:	16/10/2023
 // Purpose: This program enlarges the selected
 //          quarter of the photo being edited.
 //          The final photo is still 256 x 256.
@@ -209,9 +204,14 @@ void enlargeImage(){
     {
         for (int j = 0; j < SIZE; j++)
         {
-            image[i][j] = image2[int(i / 2) + x][int(j / 2) + y];   // This assigns each cell/bit in the chosen quarter
-            // four bits in the original image; two bits in a row
-            // and two bits in adjacent columns.
+            for (int k = 0; k < RGB; k++)
+            {
+                image[i][j][k] = image2[int(i / 2) + x][int(j / 2) + y][k];   // This assigns each cell/bit in the chosen quarter
+
+                // four bits in the original image; two bits in a row
+                // and two bits in adjacent columns.
+            }
+            
         }
 
     }
@@ -219,20 +219,23 @@ void enlargeImage(){
 }
 
 // Author: Mariam Amro Ahmed
-// Last Modification Date:	4/10/2023
+// Last Modification Date:	16/10/2023
 // Inverts the bit values of the image to get the image inverse.
 
 void invertImage() {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j< SIZE; j++) {
 
-            image[i][j] = 255 - image[i][j]; // Subtracting original value from 255 to get inverse colour
+            for (int k = 0; k < RGB; k++)
+            {
+                image[i][j][k] = 255 - image[i][j][k]; // Subtracting original value from 255 to get inverse colour
+            }
         }
-
     }
 }
+
 // Author: Mariam Amro Ahmed
-// Last Modification Date:	6/10/2023
+// Last Modification Date:	16/10/2023
 // Purpose: This rotates grayscaled bmp images leftl or right
 //          according to the degree choosen by the user.
 //          The degrees that can be chosen are: 90, 180, 270 and 360 degrees.
@@ -249,25 +252,32 @@ void rotateImage() {
     {
         degree = 360 - degree;
     }
-    for (int k = 0; k < (degree / 90); k++)
+    for (int l = 0; l < (degree / 90); l++)
     {
         for(int i = 0; i < SIZE; ++i){   // This mirrors the array from the middle to change the direction of the principal diagonal to become the off diagonal
             for(int j = 0; j < (SIZE / 2); ++j){  //Also make it easier to swap cell contents
-                temp = image[i][j];
-                image[i][j] = image[i][SIZE - j - 1];
-                image[i][SIZE - j - 1] = temp;
+                for (int k = 0; k < RGB; k++)
+                {
+                    temp = image[i][j][k];
+                    image[i][j] [k]= image[i][SIZE - j - 1][k];
+                    image[i][SIZE - j - 1][k] = temp;
+                }
             }
         }
         for(int i = 0; i < SIZE ; ++i){   // This swaps the cell contents into their final place
             for(int j = 0; j < (SIZE - i - 1); ++j){
-                temp = image[i][j];
-                image[i][j] = image[SIZE - j - 1][SIZE - i - 1];
-                image[SIZE - j - 1][SIZE - i - 1] = temp;
+                for (int k = 0; k < RGB; k++)
+                {
+                    temp = image[i][j][k];
+                    image[i][j][k] = image[SIZE - j - 1][SIZE - i - 1][k];
+                    image[SIZE - j - 1][SIZE - i - 1][k] = temp;
+                }
             }
         }
     }
 
 }
+
 // Author: Donia Kareem Mohammed
 // Last Modification Date:	4/10/2023
 // Purpose:
@@ -391,128 +401,8 @@ void MergePhotos(){
     }
 }
 
-// Author: Donia Kareem Mohammed
-// Last Modification Date:	18/10/2023
-// Purpose:
-//In this filter, I divide either the number of rows by two or the number of counts by two,
-// Depending on what I have to reverse. After this, I equate the indexes to each other
-// according to what the user chooses from.
-void Mirror()                  
-{
-    char s;
-    cout<<"enter R or L or U or D : ";
-    cin>>s;
-    if(s=='R') {
-        for (int x = 0; x < SIZE; x++) 
-        {
-            for (int y = 0; y < SIZE / 2; y++) {
-                imaGS[x][SIZE - y] = imaGS[x][y];
-
-            }
-        }
-    }
-    else if (s=='L')
-    {
-        for (int x = 0; x < SIZE; x++) 
-        {
-            for (int y = 0; y < SIZE/2 ; y++) {
-                imaGS[x][y] = imaGS[x][SIZE-y];
-            }
-        }
-
-    }
-    else if (s=='U')
-    {
-        for (int x = 0; x < SIZE/2; x++) //width
-        {
-            for (int y = 0; y < SIZE ; y++) {
-                imaGS[SIZE-x][y] = imaGS[x][y];
-
-            }
-        }
-
-    }
-    else if (s=='D')
-    {
-        for (int x = 0; x < SIZE/2; x++) //width
-        {
-            for (int y = 0; y < SIZE; y++) {
-                imaGS[x][y] = imaGS[SIZE-x][y];
-
-            }
-        }
-
-    }
-
-}
-
-// Author: Donia Kareem Mohammed
-// Last Modification Date:	18/10/2023
-// Purpose:
-//in this filter, the user gives me the dimensions of the 
-//image to be cropped. If we deviate from these dimensions, 
-//I make the pixels white. Otherwise, I leave them as they are.
-
-void crop()
-{
-    int x, y, l, w;
-    cout << " Enter X:" << endl;
-    cin >> x;
-    cout << " Enter Y:" << endl;
-    cin >> y;
-    cout << " Enter L:" << endl;
-    cin >> l;
-    cout << " Enter W:" << endl;
-    cin >> w;
-    int smx = x;
-    int lax = x + (l);
-    int smy = y;
-    int lay = y + (w);
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
-            if (i < smx || i > lax || j < smy || j > lay) {
-                imaGS[i][j] = 255;
-            }
-        }
-    }
-}
-
-// Author: Donia Kareem Mohammed
-// Last Modification Date:	18/10/2023
-// Purpose:
-//In this filter, in order for me to identify the image,I must 
-// first: obtain the average of all the pixels. 
-//Second:I compare this average with the pixels to my right and above me.
-
-void  detect(){
-    int av = 0, sum = 0;
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            sum += imaGS[i][j];
-        }
-    }
-    av = sum / (265 * 256);
-    for (int i = 1; i < SIZE-1; i++) {
-        for (int j = 1; j < SIZE-1; j++) {
-            if ((imaGS[i][j]>av&&imaGS[i][j+1]<av)
-            ||(imaGS[i][j]<av&&imaGS[i][j+1]>av)||
-            (imaGS[i][j]<av&&imaGS[i+1][j]>av)||
-                (imaGS[i][j]>av&&imaGS[i+1][j]<av)||
-                (imaGS[i][j]>av&&imaGS[i+1][j+1]<av)||
-                (imaGS[i][j]<av&&imaGS[i+1][j+1]>av) )
-            {
-                imaGS[i][j] = 0;
-            } else {
-                imaGS[i][j] = 255;
-            }
-
-        }
-
-    }
-}
-
 // Author: Mariam Amro Ahmed
-// Last Modification Date: 15/10/2023
+// Last Modification Date: 16/10/2023
 // Purpose:
 // This filter shuffles the order in which the quarters 
 // of the image are ordered according to the user's preference 
@@ -546,34 +436,38 @@ void shuffleImage(){
     {                                   // x and y are defined differntly according to the quarter
         for (int j = 0; j < SIZE; j++)
         {
-            if (i < 128)
+            for (int k = 0; k < RGB; k++)
             {
-                if (j < 128)
+                if (i < 128)
                 {
-                    //Use order[0] for quarter 1    // Here x is either 0 if quarters 1 or 2 are 
-                    x = int(order[0] / 3) * 128;    // chosen or 128 if quarters 3 or 4 are chosen 
-                    y = isEven(order[0]) * 128;     // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
-                }else{
-                    //Use order[1] for quarter 2        // Here x is either 0 if quarters 1 or 2 are 
-                    x = int(order[1] / 3) * 128;        // chosen or 128 if quarters 3 or 4 are chosen 
-                    y  = ceil(order[1] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
-                }
-                
-            }else{
-                if (j < 128)
-                {
-                    //Use order[2] for quarter 3        // Here x is either 0 if quarters 3 or 4 are 
-                    x = (int(order[2] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
-                    y = isEven(order[2]) * 128;         // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
+                    if (j < 128)
+                    {
+                        //Use order[0] for quarter 1    // Here x is either 0 if quarters 1 or 2 are 
+                        x = int(order[0] / 3) * 128;    // chosen or 128 if quarters 3 or 4 are chosen 
+                        y = isEven(order[0]) * 128;     // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
+                    }else{
+                        //Use order[1] for quarter 2        // Here x is either 0 if quarters 1 or 2 are 
+                        x = int(order[1] / 3) * 128;        // chosen or 128 if quarters 3 or 4 are chosen 
+                        y  = ceil(order[1] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
+                    }
                     
                 }else{
-                    //Use order[3] for quarter 4        // Here x is either 0 if quarters 3 or 4 are
-                    x = (int(order[3] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
-                    y  = ceil(order[3] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
+                    if (j < 128)
+                    {
+                        //Use order[2] for quarter 3        // Here x is either 0 if quarters 3 or 4 are 
+                        x = (int(order[2] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
+                        y = isEven(order[2]) * 128;         // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
+                        
+                    }else{
+                        //Use order[3] for quarter 4        // Here x is either 0 if quarters 3 or 4 are
+                        x = (int(order[3] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
+                        y  = ceil(order[3] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
+                    }
+                    
                 }
-                
+                image[i][j][k] =  image2[(i + x)][(j + y)][k];
+            
             }
-            image[i][j] =  image2[(i + x)][(j + y)];
         }
         
     }
@@ -583,77 +477,3 @@ void shuffleImage(){
 bool isEven(int n) {    // Function to check if the number is even or not
     return (n % 2 == 0); 
     } 
-
-void skewHorizontally(){
-    double rad, move, increment, ratio, moveCopy;
-    cout << "Please enter the degree to skew to the right: ";
-    cin >> rad;
-    rad =  (M_PI * rad) / 180;      // Getting degree in radian as tan uses radian
-    move = moveCopy = tan(rad) * 256;      // move is the length of shifting to the right
-    increment  = move / 256;    // The increment so that move is zero at the last (256 th) line
-    int row, clm;
-    row = 0;                            // Ratio to shrink image according to degree 
-    ratio = tan(rad) + 1;               // ratio = 256 / x where x is 256 / (tan(rad) + 1)
-    cout << move <<  " " << rad << " " << ratio  << " " << ceil(ratio) << "\n";
-    unsigned char largeImage[SIZE][SIZE + int(move)];
-    unsigned char shrinkCopy[SIZE][SIZE + int(move)];
-    for (int i = 0; i < SIZE; i++)  // Turn largeImage all white
-    {
-        for (int j = 0; j < (SIZE + int(move)); j++)
-        { 
-            largeImage[i][j] = 255;
-        }
-        
-    }
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            largeImage[i][j + int(move)] = image[i][j];     // Copying original with skew
-        }
-        move -= increment; // Decreasing length of skew per row
-    }
-
-
-//-------------------------------------------------------------------------------------
-    for (int i = 0; i < (SIZE); i++)  // Copying the skewed image
-    {
-        for (int j = 0; j < (SIZE + int(moveCopy)); j++)
-        {
-            shrinkCopy[i][j] = largeImage[i][j];
-        }
-        
-    }
-
-    for (int i = 0; i < (SIZE); i++)  // Turning largeImage all white again
-    {
-        for (int j = 0; j < (SIZE + int(moveCopy)); j++)
-        {
-            largeImage[i][j] = 255;
-        }
-        
-    }
-    
-    for (int i = 0; i < SIZE; i++)    // Shrinking the large image by skipping columns according to ratio
-    {
-        clm = 0;
-        for (int j = 0; j < SIZE + int(moveCopy) ; j += (ratio))
-        {
-            
-            largeImage[row][clm] = shrinkCopy[i][j];
-            clm++;
-        }
-        row++;
-    }
-    
-//-------------------------------------------------------------------------------------
-    for (int i = 0; i < SIZE; i++)  // Copying the shrunken skewed image
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            image[i][j] = largeImage[i][j];
-        }
-        
-    }
-    
-}
