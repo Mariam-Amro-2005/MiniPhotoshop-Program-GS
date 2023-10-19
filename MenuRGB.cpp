@@ -30,6 +30,9 @@ void copyImage();
 bool isEven(int n);
 void BAW();
 void flip();
+void Mirror();
+void crop();
+void  detect();
 
 using namespace std;
 unsigned char image[SIZE][SIZE][RGB];
@@ -490,7 +493,38 @@ bool isEven(int n) {    // Function to check if the number is even or not
     return (n % 2 == 0); 
     } 
 
+void  flip(){
+    cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
+    string s2;
+    cin >> s2;
+    if (s2[0] == 'v')        //I divide the image into height
+    {
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE / 2; y++) {
+                for (int k= 0; k <3; ++k) {
 
+                    int temp = image[x][y][k];
+                    image[x][y][k] = image[x][SIZE - y][k];
+                    image[x][SIZE - y][k] = temp;
+                }
+            }
+        }
+    }  else if (s2[0]=='h')
+    {
+        for (int x = 0; x < SIZE / 2; x++) //width
+        {
+            for (int y = 0; y < SIZE; y++) {
+                for (int k = 0; k < 3; ++k) {
+
+
+                    int temp = imaRG[x][y][k];
+                    image[x][y][k] = image[SIZE - x][y][k];
+                    image[SIZE - x][y][k] = temp;
+                }
+            }
+        }
+    }
+}
 
 
 
