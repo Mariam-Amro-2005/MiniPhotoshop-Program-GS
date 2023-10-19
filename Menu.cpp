@@ -28,6 +28,10 @@ void enlargeImage();
 void copyImage();
 void BAW();
 void flip();
+void Mirror();
+void crop();
+void  detect();
+
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
@@ -101,7 +105,7 @@ string Options(){
             rotateImage();
         }else if (option == "7")
         {
-            continue;
+            detect();
         }else if (option == "8")
         {
             copyImage();
@@ -111,7 +115,7 @@ string Options(){
             continue;
         }else if (option == "a")
         {
-            continue;
+           Mirror();
         }else if (option == "b")
         {
             continue;
@@ -120,7 +124,7 @@ string Options(){
             continue;
         }else if (option == "d")
         {
-            continue;
+            crop();
         }else if (option == "e")
         {
             continue;
@@ -381,3 +385,137 @@ void MergePhotos(){
         }
     }
 }
+// Author: Donia Kareem Mohammed
+// Last Modification Date:	18/10/2023
+// Purpose:
+//In this filter, I divide either the number of rows by two or the number of counts by two,
+// Depending on what I have to reverse. After this, I equate the indexes to each other
+// according to what the user chooses from.
+void Mirror()                  
+{
+    char s;
+    cout<<"enter R or L or U or D : ";
+    cin>>s;
+    if(s=='R') {
+        for (int x = 0; x < SIZE; x++) 
+        {
+            for (int y = 0; y < SIZE / 2; y++) {
+                imaGS[x][SIZE - y] = imaGS[x][y];
+
+            }
+        }
+    }
+    else if (s=='L')
+    {
+        for (int x = 0; x < SIZE; x++) 
+        {
+            for (int y = 0; y < SIZE/2 ; y++) {
+                imaGS[x][y] = imaGS[x][SIZE-y];
+            }
+        }
+
+    }
+    else if (s=='U')
+    {
+        for (int x = 0; x < SIZE/2; x++) //width
+        {
+            for (int y = 0; y < SIZE ; y++) {
+                imaGS[SIZE-x][y] = imaGS[x][y];
+
+            }
+        }
+
+    }
+    else if (s=='D')
+    {
+        for (int x = 0; x < SIZE/2; x++) //width
+        {
+            for (int y = 0; y < SIZE; y++) {
+                imaGS[x][y] = imaGS[SIZE-x][y];
+
+            }
+        }
+
+    }
+
+}
+
+// Author: Donia Kareem Mohammed
+// Last Modification Date:	18/10/2023
+// Purpose:
+//in this filter, the user gives me the dimensions of the 
+//image to be cropped. If we deviate from these dimensions, 
+//I make the pixels white. Otherwise, I leave them as they are.
+
+void crop()
+{
+    int x, y, l, w;
+    cout << " Enter X:" << endl;
+    cin >> x;
+    cout << " Enter Y:" << endl;
+    cin >> y;
+    cout << " Enter L:" << endl;
+    cin >> l;
+    cout << " Enter W:" << endl;
+    cin >> w;
+    int smx = x;
+    int lax = x + (l);
+    int smy = y;
+    int lay = y + (w);
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            if (i < smx || i > lax || j < smy || j > lay) {
+                imaGS[i][j] = 255;
+            }
+        }
+    }
+}
+
+// Author: Donia Kareem Mohammed
+// Last Modification Date:	18/10/2023
+// Purpose:
+//In this filter, in order for me to identify the image,I must 
+// first: obtain the average of all the pixels. 
+//Second:I compare this average with the pixels to my right and above me.
+
+void  detect(){
+    int av = 0, sum = 0;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            sum += imaGS[i][j];
+        }
+    }
+    av = sum / (265 * 256);
+    for (int i = 1; i < SIZE-1; i++) {
+        for (int j = 1; j < SIZE-1; j++) {
+            if ((imaGS[i][j]>av&&imaGS[i][j+1]<av)
+            ||(imaGS[i][j]<av&&imaGS[i][j+1]>av)||
+            (imaGS[i][j]<av&&imaGS[i+1][j]>av)||
+                (imaGS[i][j]>av&&imaGS[i+1][j]<av)||
+                (imaGS[i][j]>av&&imaGS[i+1][j+1]<av)||
+                (imaGS[i][j]<av&&imaGS[i+1][j+1]>av) )
+            {
+                imaGS[i][j] = 0;
+            } else {
+                imaGS[i][j] = 255;
+            }
+
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
