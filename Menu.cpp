@@ -409,7 +409,7 @@ void Mirror()
         for (int x = 0; x < SIZE; x++) 
         {
             for (int y = 0; y < SIZE / 2; y++) {
-                imaGS[x][SIZE - y] = imaGS[x][y];
+                image[x][SIZE - y] = image[x][y];
 
         }
     }
@@ -419,7 +419,7 @@ void Mirror()
         for (int x = 0; x < SIZE; x++) 
         {
             for (int y = 0; y < SIZE/2 ; y++) {
-                imaGS[x][y] = imaGS[x][SIZE-y];
+                image[x][y] = image[x][SIZE-y];
         }
 
     }
@@ -429,7 +429,7 @@ void Mirror()
         {
             for (int y = 0; y < SIZE ; y++) {
 
-                imaGS[SIZE-x][y] = imaGS[x][y];
+                image[SIZE-x][y] = image[x][y];
 
 
             }
@@ -442,7 +442,7 @@ void Mirror()
         {
             for (int y = 0; y < SIZE; y++) {
 
-                imaGS[x][y] = imaGS[SIZE-x][y];
+                image[x][y] = image[SIZE-x][y];
 
 
             }
@@ -477,7 +477,7 @@ void crop()
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             if (i < smx || i > lax || j < smy || j > lay) {
-                imaGS[i][j] = 255;
+                image[i][j] = 255;
             }
         }
     }
@@ -502,12 +502,12 @@ void  detect(){
     for (int i = 1; i < SIZE-1; i++) {
         for (int j = 1; j < SIZE-1; j++) {
 
-            if ((imaGS[i][j]>av&&imaGS[i][j+1]<av)
-            ||(imaGS[i][j]<av&&imaGS[i][j+1]>av)||
-            (imaGS[i][j]<av&&imaGS[i+1][j]>av)||
-                (imaGS[i][j]>av&&imaGS[i+1][j]<av)||
-                (imaGS[i][j]>av&&imaGS[i+1][j+1]<av)||
-                (imaGS[i][j]<av&&imaGS[i+1][j+1]>av) )
+            if ((image[i][j]>av&&image[i][j+1]<av)
+            ||(image[i][j]<av&&image[i][j+1]>av)||
+            (image[i][j]<av&&image[i+1][j]>av)||
+                (image[i][j]>av&&image[i+1][j]<av)||
+                (image[i][j]>av&&image[i+1][j+1]<av)||
+                (image[i][j]<av&&image[i+1][j+1]>av) )
             {
                 imaGS[i][j] = 0;
             } else {
