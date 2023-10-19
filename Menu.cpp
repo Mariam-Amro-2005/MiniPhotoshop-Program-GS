@@ -26,6 +26,7 @@ void enlargeImage();
 void copyImage();
 void Shrink ();
 void  Blur ();
+void vertical_skew();
 void BAW();
 void flip();
 
@@ -344,6 +345,51 @@ public:
             }
         }
     }
+    // Author: Menna Ali Abd elbaky
+    // Last Modification Date:	9/10/2023
+    // Purpose: to make skew up
+    void vertical_skew(){
+        for (int i=0 ; i<SIZE ; ++i)
+            for (int j=0 ; j<SIZE ; ++j){
+                image2[i][j]=image[i][j];
+            }
+        for (int i=0 ; i<SIZE ; ++i)
+            for (int j=0 ; j<SIZE ; ++j){
+               image[i][j]=255;
+            }
+        std::cout<<"Enter the degree of skew up : ";
+        double  deg;
+        std::cin>>deg; // getting the degree from user
+        deg =(deg*22)/(7*180);//make degree in radian system
+        double x=256/(1+tan(deg));// the length it will shift to
+        double len=tan(deg)*SIZE , mv=len/256,t;// the length that will be white & the step will be minus to make skew
+        unsigned char tm_imag[SIZE+(int)len][SIZE];//
+        for (int i=0 ; i<SIZE+(int)len ; ++i)// make tm matrix white
+            for (int j=0 ; j<SIZE ; ++j){//
+                tm_imag[i][j]=255;//
+            }//
+
+        for (int  i=0 ; i<SIZE  ; i++){//
+            t=len;//
+            for (int  j=0 ; j<SIZE ; j++){// to make skew
+                tm_imag[i+(int)t][j]=image2[i][j];//
+                t-=mv;
+            }
+            len-=mv;
+        }
+        int cnt=255/(int)x; // the ratio of shrink
+        for (int i=0 ; i<SIZE ; i+=cnt) // to make shrink
+            for (int j=0 ; j<SIZE ; j++){
+                tm_imag[i][j]=tm_imag[i][j];
+            }
+
+        for (int i=0 ; i<SIZE   ; ++i){
+            for (int j=0 ; j<SIZE ; j++){
+                image[i][j]=tm_imag[i][j];
+
+            }
+        }
+    }
 };
 int main(){
     cout << "Welcome User! \n";
@@ -393,7 +439,7 @@ int main(){
         } else if (option == "e") {
             continue;
         } else if (option == "f") {
-            continue;
+            val.vertical_skew();
         } else if (option == "s") {
             val.saveImage();
         } else if (option == "l") {
