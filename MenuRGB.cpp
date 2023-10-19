@@ -81,19 +81,19 @@ string Options(){
     {
         if (option == "1")
         {
-            //BAW();
+            BAW();
         }else if (option == "2")
         {
             invertImage();
         }else if (option == "3")
         {
-            //MergePhotos();
+            MergePhotos();
         }else if (option == "4")
         {
-            //flip();
+            flip();
         }else if (option == "5")
         {
-            //Dark_Light();
+            Dark_Light();
         }else if (option == "6")
         {
             rotateImage();
@@ -285,7 +285,7 @@ void rotateImage() {
 // If the pixel that I am standing on is larger than 115
 // I will turn it to white, if less, I will turn it to black.
 
-/*void BAW(){
+void BAW(){
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -296,7 +296,7 @@ void rotateImage() {
                 image[i][j] = 0;
         }
     }
-}*/
+}
 
 // Author: Menna Ali Abd Elbaky
 // Last Modification Date:	9/10/2023
@@ -304,7 +304,7 @@ void rotateImage() {
 // This filter lightens or darkens the image
 // by changing the values of each pixel.
 
-/*void Dark_Light(){
+void Dark_Light(){
     std :: string k;
     std :: cout << "Would you like to (D)arken or (L)ighten your image? ";
     std :: cin >> k; // input option
@@ -337,7 +337,7 @@ void rotateImage() {
             }
         }
     }
-}*/
+}
 
 // Author: Donia Kareem Mohammed
 // Last Modification Date:	4/10/2023
@@ -346,7 +346,7 @@ void rotateImage() {
 // If he requests to flip the image vertically or horizontally
 // we will fulfill his request through these function.
 
-/*void flip(){
+void flip(){
     cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
     string s2;
     cin >> s2;
@@ -374,7 +374,7 @@ void rotateImage() {
         }
     }
 
-}*/
+}
 
 // Author: Menna Ali Abd Elbaky
 // Last Modification Date:	9/10/2023
@@ -383,7 +383,7 @@ void rotateImage() {
 //          dividing it by half to create the new value
 //          for image[i][j].
 
-/*void MergePhotos(){
+void MergePhotos(){
     //std ::string  s;
     char s[100];
     std :: cout << "Enter another photo: ";
@@ -399,7 +399,7 @@ void rotateImage() {
             image[i][j] = y; // put the average in pixl in first image
         }
     }
-}*/
+}
 
 // Author: Mariam Amro Ahmed
 // Last Modification Date: 16/10/2023

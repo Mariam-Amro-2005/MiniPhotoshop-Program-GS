@@ -30,6 +30,7 @@ void BAW();
 void flip();
 bool isEven(int n);
 void shuffleImage();
+void skewHorizontally();
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
@@ -125,7 +126,7 @@ string Options(){
             continue;
         }else if (option == "e")
         {
-            continue;
+            skewHorizontally();
         }else if (option == "f")
         {
             continue;
@@ -458,3 +459,77 @@ void shuffleImage(){
 bool isEven(int n) {    // Function to check if the number is even or not
     return (n % 2 == 0); 
     } 
+
+void skewHorizontally(){
+    double rad, move, increment, ratio, moveCopy;
+    cout << "Please enter the degree to skew to the right: ";
+    cin >> rad;
+    rad =  (M_PI * rad) / 180;      // Getting degree in radian as tan uses radian
+    move = moveCopy = tan(rad) * 256;      // move is the length of shifting to the right
+    increment  = move / 256;    // The increment so that move is zero at the last (256 th) line
+    int row, clm;
+    row = 0;                            // Ratio to shrink image according to degree 
+    ratio = tan(rad) + 1;               // ratio = 256 / x where x is 256 / (tan(rad) + 1)
+    cout << move <<  " " << rad << " " << ratio  << " " << ceil(ratio) << "\n";
+    unsigned char largeImage[SIZE][SIZE + int(move)];
+    unsigned char shrinkCopy[SIZE][SIZE + int(move)];
+    for (int i = 0; i < SIZE; i++)  // Turn largeImage all white
+    {
+        for (int j = 0; j < (SIZE + int(move)); j++)
+        { 
+            largeImage[i][j] = 255;
+        }
+        
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            largeImage[i][j + int(move)] = image[i][j];     // Copying original with skew
+        }
+        move -= increment; // Decreasing length of skew per row
+    }
+
+
+//-------------------------------------------------------------------------------------
+    for (int i = 0; i < (SIZE); i++)  // Copying the skewed image
+    {
+        for (int j = 0; j < (SIZE + int(moveCopy)); j++)
+        {
+            shrinkCopy[i][j] = largeImage[i][j];
+        }
+        
+    }
+
+    for (int i = 0; i < (SIZE); i++)  // Turning largeImage all white again
+    {
+        for (int j = 0; j < (SIZE + int(moveCopy)); j++)
+        {
+            largeImage[i][j] = 255;
+        }
+        
+    }
+    
+    for (int i = 0; i < SIZE; i++)    // Shrinking the large image by skipping columns according to ratio
+    {
+        clm = 0;
+        for (int j = 0; j < SIZE + int(moveCopy) ; j += (ratio))
+        {
+            
+            largeImage[row][clm] = shrinkCopy[i][j];
+            clm++;
+        }
+        row++;
+    }
+    
+//-------------------------------------------------------------------------------------
+    for (int i = 0; i < SIZE; i++)  // Copying the shrunken skewed image
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            image[i][j] = largeImage[i][j];
+        }
+        
+    }
+    
+}
