@@ -119,7 +119,7 @@ string Options(){
             continue;
         }else if (option == "a")
         {
-            Mirror();
+           Mirror();
         }else if (option == "b")
         {
             shuffleImage();
@@ -398,25 +398,28 @@ void MergePhotos(){
 //In this filter, I divide either the number of rows by two or the number of counts by two,
 // Depending on what I have to reverse. After this, I equate the indexes to each other
 // according to what the user chooses from.
+
 void Mirror()
 {
     char s;
     cout<<"enter R or L or U or D : ";
     cin>>s;
     if(s=='R') {
-        for (int x = 0; x < SIZE; x++){
+
+        for (int x = 0; x < SIZE; x++) 
+        {
             for (int y = 0; y < SIZE / 2; y++) {
-                image[x][SIZE - y] = image[x][y];
-            }
+                imaGS[x][SIZE - y] = imaGS[x][y];
+
         }
     }
     else if (s=='L')
     {
-        for (int x = 0; x < SIZE; x++)
+
+        for (int x = 0; x < SIZE; x++) 
         {
             for (int y = 0; y < SIZE/2 ; y++) {
-                image[x][y] = image[x][SIZE-y];
-            }
+                imaGS[x][y] = imaGS[x][SIZE-y];
         }
 
     }
@@ -425,7 +428,9 @@ void Mirror()
         for (int x = 0; x < SIZE/2; x++) //width
         {
             for (int y = 0; y < SIZE ; y++) {
-                image[SIZE-x][y] = image[x][y];
+
+                imaGS[SIZE-x][y] = imaGS[x][y];
+
 
             }
         }
@@ -436,7 +441,9 @@ void Mirror()
         for (int x = 0; x < SIZE/2; x++) //width
         {
             for (int y = 0; y < SIZE; y++) {
-                image[x][y] = image[SIZE-x][y];
+
+                imaGS[x][y] = imaGS[SIZE-x][y];
+
 
             }
         }
@@ -470,7 +477,7 @@ void crop()
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             if (i < smx || i > lax || j < smy || j > lay) {
-                image[i][j] = 255;
+                imaGS[i][j] = 255;
             }
         }
     }
@@ -487,23 +494,25 @@ void  detect(){
     int av = 0, sum = 0;
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            sum += image[i][j];
+
+            sum += imaGS[i][j];
         }
     }
     av = sum / (265 * 256);
     for (int i = 1; i < SIZE-1; i++) {
         for (int j = 1; j < SIZE-1; j++) {
-            if ((image[i][j]>av&&image[i][j+1]<av)
-                ||(image[i][j]<av&&image[i][j+1]>av)||
-                (image[i][j]<av&&image[i+1][j]>av)||
-                (image[i][j]>av&&image[i+1][j]<av)||
-                (image[i][j]>av&&image[i+1][j+1]<av)||
-                (image[i][j]<av&&image[i+1][j+1]>av) )
+
+            if ((imaGS[i][j]>av&&imaGS[i][j+1]<av)
+            ||(imaGS[i][j]<av&&imaGS[i][j+1]>av)||
+            (imaGS[i][j]<av&&imaGS[i+1][j]>av)||
+                (imaGS[i][j]>av&&imaGS[i+1][j]<av)||
+                (imaGS[i][j]>av&&imaGS[i+1][j+1]<av)||
+                (imaGS[i][j]<av&&imaGS[i+1][j+1]>av) )
             {
-                image[i][j] = 0;
+                imaGS[i][j] = 0;
             } else {
-                image[i][j] = 255;
-            }
+                imaGS[i][j] = 255;
+
 
         }
 
@@ -513,9 +522,9 @@ void  detect(){
 // Author: Mariam Amro Ahmed
 // Last Modification Date: 15/10/2023
 // Purpose:
-// This filter shuffles the order in which the quarters
-// of the image are ordered according to the user's preference
-// with the use of a copy of the image and increments
+// This filter shuffles the order in which the quarters 
+// of the image are ordered according to the user's preference 
+// with the use of a copy of the image and increments 
 
 void shuffleImage(){
 
@@ -528,7 +537,6 @@ void shuffleImage(){
     int j = 0;
     for (int i = 0; i < input.length(); i++)    // Takes only the numbers form the input in
     {                                           // integer form an stores it in the array order
-
         if (input[i] != space[0])
         {
             string temp ="";
@@ -549,39 +557,40 @@ void shuffleImage(){
             {
                 if (j < 128)
                 {
-                    //Use order[0] for quarter 1    // Here x is either 0 if quarters 1 or 2 are
-                    x = int(order[0] / 3) * 128;    // chosen or 128 if quarters 3 or 4 are chosen
+
+                    //Use order[0] for quarter 1    // Here x is either 0 if quarters 1 or 2 are 
+                    x = int(order[0] / 3) * 128;    // chosen or 128 if quarters 3 or 4 are chosen 
                     y = isEven(order[0]) * 128;     // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
                 }else{
-                    //Use order[1] for quarter 2        // Here x is either 0 if quarters 1 or 2 are
-                    x = int(order[1] / 3) * 128;        // chosen or 128 if quarters 3 or 4 are chosen
+                    //Use order[1] for quarter 2        // Here x is either 0 if quarters 1 or 2 are 
+                    x = int(order[1] / 3) * 128;        // chosen or 128 if quarters 3 or 4 are chosen 
                     y  = ceil(order[1] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
                 }
-
+                
             }else{
                 if (j < 128)
                 {
-                    //Use order[2] for quarter 3        // Here x is either 0 if quarters 3 or 4 are
+                    //Use order[2] for quarter 3        // Here x is either 0 if quarters 3 or 4 are 
                     x = (int(order[2] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
                     y = isEven(order[2]) * 128;         // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
-
+                    
                 }else{
                     //Use order[3] for quarter 4        // Here x is either 0 if quarters 3 or 4 are
                     x = (int(order[3] / 3) - 1) * 128;  // chosen or -128 if quarters 1 or 2 are chosen
                     y  = ceil(order[3] % 2) * (-128);   // Similarly y is 0 (quarters 2 & 4) or -128 (quarters 1 & 3)
                 }
-
+                
             }
             image[i][j] =  image2[(i + x)][(j + y)];
         }
-
+        
     }
-
 }
 
 bool isEven(int n) {    // Function to check if the number is even or not
     return (n % 2 == 0);
 }
+
 
 void skewHorizontally(){
     double rad, move, increment, ratio, moveCopy;
@@ -591,7 +600,8 @@ void skewHorizontally(){
     move = moveCopy = tan(rad) * 256;      // move is the length of shifting to the right
     increment  = move / 256;    // The increment so that move is zero at the last (256 th) line
     int row, clm;
-    row = 0;                            // Ratio to shrink image according to degree
+
+    row = 0;                            // Ratio to shrink image according to degree 
     ratio = tan(rad) + 1;               // ratio = 256 / x where x is 256 / (tan(rad) + 1)
     cout << move <<  " " << rad << " " << ratio  << " " << ceil(ratio) << "\n";
     unsigned char largeImage[SIZE][SIZE + int(move)];
@@ -599,9 +609,10 @@ void skewHorizontally(){
     for (int i = 0; i < SIZE; i++)  // Turn largeImage all white
     {
         for (int j = 0; j < (SIZE + int(move)); j++)
-        {
+        { 
             largeImage[i][j] = 255;
         }
+        
 
     }
     for (int i = 0; i < SIZE; i++)
@@ -631,14 +642,15 @@ void skewHorizontally(){
             largeImage[i][j] = 255;
         }
 
+        
     }
+    
 
     for (int i = 0; i < SIZE; i++)    // Shrinking the large image by skipping columns according to ratio
     {
         clm = 0;
         for (int j = 0; j < SIZE + int(moveCopy) ; j += (ratio))
         {
-
             largeImage[row][clm] = shrinkCopy[i][j];
             clm++;
         }
@@ -653,9 +665,11 @@ void skewHorizontally(){
             image[i][j] = largeImage[i][j];
         }
 
+        
     }
-
+    
 }
+
 // Author: Menna Ali Abd elbaky
 // Last Modification Date:	9/10/2023
 // Purpose: to make skew up
@@ -767,3 +781,4 @@ void  Blur (){
         }
     }
 }
+
