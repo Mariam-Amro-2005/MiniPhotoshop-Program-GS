@@ -30,6 +30,7 @@ void BAW();
 void flip();
 void Mirror();
 void crop();
+void vertical_skew();
 void  detect();
 bool isEven(int n);
 void shuffleImage();
@@ -133,7 +134,7 @@ string Options(){
             skewHorizontally();
         }else if (option == "f")
         {
-            continue;
+            vertical_skew();
         }else if (option == "s")
         {
             saveImage();
@@ -397,27 +398,28 @@ void MergePhotos(){
 //In this filter, I divide either the number of rows by two or the number of counts by two,
 // Depending on what I have to reverse. After this, I equate the indexes to each other
 // according to what the user chooses from.
-void Mirror()                  
+
+void Mirror()
 {
     char s;
     cout<<"enter R or L or U or D : ";
     cin>>s;
     if(s=='R') {
+
         for (int x = 0; x < SIZE; x++) 
         {
             for (int y = 0; y < SIZE / 2; y++) {
                 imaGS[x][SIZE - y] = imaGS[x][y];
 
-            }
         }
     }
     else if (s=='L')
     {
+
         for (int x = 0; x < SIZE; x++) 
         {
             for (int y = 0; y < SIZE/2 ; y++) {
                 imaGS[x][y] = imaGS[x][SIZE-y];
-            }
         }
 
     }
@@ -426,7 +428,9 @@ void Mirror()
         for (int x = 0; x < SIZE/2; x++) //width
         {
             for (int y = 0; y < SIZE ; y++) {
+
                 imaGS[SIZE-x][y] = imaGS[x][y];
+
 
             }
         }
@@ -437,7 +441,9 @@ void Mirror()
         for (int x = 0; x < SIZE/2; x++) //width
         {
             for (int y = 0; y < SIZE; y++) {
+
                 imaGS[x][y] = imaGS[SIZE-x][y];
+
 
             }
         }
@@ -449,8 +455,8 @@ void Mirror()
 // Author: Donia Kareem Mohammed
 // Last Modification Date:	18/10/2023
 // Purpose:
-//in this filter, the user gives me the dimensions of the 
-//image to be cropped. If we deviate from these dimensions, 
+//in this filter, the user gives me the dimensions of the
+//image to be cropped. If we deviate from these dimensions,
 //I make the pixels white. Otherwise, I leave them as they are.
 
 void crop()
@@ -480,20 +486,22 @@ void crop()
 // Author: Donia Kareem Mohammed
 // Last Modification Date:	18/10/2023
 // Purpose:
-//In this filter, in order for me to identify the image,I must 
-// first: obtain the average of all the pixels. 
+//In this filter, in order for me to identify the image,I must
+// first: obtain the average of all the pixels.
 //Second:I compare this average with the pixels to my right and above me.
 
 void  detect(){
     int av = 0, sum = 0;
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
+
             sum += imaGS[i][j];
         }
     }
     av = sum / (265 * 256);
     for (int i = 1; i < SIZE-1; i++) {
         for (int j = 1; j < SIZE-1; j++) {
+
             if ((imaGS[i][j]>av&&imaGS[i][j+1]<av)
             ||(imaGS[i][j]<av&&imaGS[i][j+1]>av)||
             (imaGS[i][j]<av&&imaGS[i+1][j]>av)||
@@ -504,7 +512,7 @@ void  detect(){
                 imaGS[i][j] = 0;
             } else {
                 imaGS[i][j] = 255;
-            }
+
 
         }
 
@@ -527,9 +535,8 @@ void shuffleImage(){
     getline(cin, ignore);   // So it does not take the name of the file as input
     getline(cin, input);
     int j = 0;
-    for (int i = 0; i < input.length(); i++)    // Takes only the numbers form the input in 
+    for (int i = 0; i < input.length(); i++)    // Takes only the numbers form the input in
     {                                           // integer form an stores it in the array order
-        
         if (input[i] != space[0])
         {
             string temp ="";
@@ -537,7 +544,7 @@ void shuffleImage(){
             order[j] = stoi(temp);
             j++;
         }
-        
+
     }
     copyImage();    // Saves a copy to retrieve data from
     int x, y;       // While the original is modified
@@ -550,6 +557,7 @@ void shuffleImage(){
             {
                 if (j < 128)
                 {
+
                     //Use order[0] for quarter 1    // Here x is either 0 if quarters 1 or 2 are 
                     x = int(order[0] / 3) * 128;    // chosen or 128 if quarters 3 or 4 are chosen 
                     y = isEven(order[0]) * 128;     // Similarly y is 0 (quarters 1 & 3) or 128 (quarters 2 & 4)
@@ -577,12 +585,12 @@ void shuffleImage(){
         }
         
     }
-    
 }
 
 bool isEven(int n) {    // Function to check if the number is even or not
-    return (n % 2 == 0); 
-    } 
+    return (n % 2 == 0);
+}
+
 
 void skewHorizontally(){
     double rad, move, increment, ratio, moveCopy;
@@ -592,6 +600,7 @@ void skewHorizontally(){
     move = moveCopy = tan(rad) * 256;      // move is the length of shifting to the right
     increment  = move / 256;    // The increment so that move is zero at the last (256 th) line
     int row, clm;
+
     row = 0;                            // Ratio to shrink image according to degree 
     ratio = tan(rad) + 1;               // ratio = 256 / x where x is 256 / (tan(rad) + 1)
     cout << move <<  " " << rad << " " << ratio  << " " << ceil(ratio) << "\n";
@@ -604,6 +613,7 @@ void skewHorizontally(){
             largeImage[i][j] = 255;
         }
         
+
     }
     for (int i = 0; i < SIZE; i++)
     {
@@ -622,7 +632,7 @@ void skewHorizontally(){
         {
             shrinkCopy[i][j] = largeImage[i][j];
         }
-        
+
     }
 
     for (int i = 0; i < (SIZE); i++)  // Turning largeImage all white again
@@ -631,21 +641,22 @@ void skewHorizontally(){
         {
             largeImage[i][j] = 255;
         }
+
         
     }
     
+
     for (int i = 0; i < SIZE; i++)    // Shrinking the large image by skipping columns according to ratio
     {
         clm = 0;
         for (int j = 0; j < SIZE + int(moveCopy) ; j += (ratio))
         {
-            
             largeImage[row][clm] = shrinkCopy[i][j];
             clm++;
         }
         row++;
     }
-    
+
 //-------------------------------------------------------------------------------------
     for (int i = 0; i < SIZE; i++)  // Copying the shrunken skewed image
     {
@@ -653,7 +664,121 @@ void skewHorizontally(){
         {
             image[i][j] = largeImage[i][j];
         }
+
         
     }
     
 }
+
+// Author: Menna Ali Abd elbaky
+// Last Modification Date:	9/10/2023
+// Purpose: to make skew up
+void vertical_skew(){
+    for (int i=0 ; i<SIZE ; ++i)
+        for (int j=0 ; j<SIZE ; ++j){
+            image2[i][j]=image[i][j];
+        }
+    for (int i=0 ; i<SIZE ; ++i)
+        for (int j=0 ; j<SIZE ; ++j){
+            image[i][j]=255;
+        }
+    std::cout<<"Enter the degree of skew up : ";
+    double  deg;
+    std::cin>>deg; // getting the degree from user
+    deg =(deg*22)/(7*180);//make degree in radian system
+    double x=256/(1+tan(deg));// the length it will shift to
+    double len=tan(deg)*SIZE , mv=len/256,t;// the length that will be white & the step will be minus to make skew
+    unsigned char tm_imag[SIZE+(int)len][SIZE];//
+    for (int i=0 ; i<SIZE+(int)len ; ++i)// make tm matrix white
+        for (int j=0 ; j<SIZE ; ++j){//
+            tm_imag[i][j]=255;//
+        }//
+
+    for (int  i=0 ; i<SIZE  ; i++){//
+        t=len;//
+        for (int  j=0 ; j<SIZE ; j++){// to make skew
+            tm_imag[i+(int)t][j]=image2[i][j];//
+            t-=mv;
+        }
+        len-=mv;
+    }
+    int cnt=255/(int)x; // the ratio of shrink
+    for (int i=0 ; i<SIZE ; i+=cnt) // to make shrink
+        for (int j=0 ; j<SIZE ; j++){
+            tm_imag[i][j]=tm_imag[i][j];
+        }
+
+    for (int i=0 ; i<SIZE   ; ++i){
+        for (int j=0 ; j<SIZE ; j++){
+            image[i][j]=tm_imag[i][j];
+
+        }
+    }
+}
+// Author: Menna ali abd elbaky
+// Last Modification Date:	9/10/2023
+// Purpose: minimize the size of image
+void Shrink (){
+    for (int i=0 ; i<SIZE ; ++i)
+        for (int j=0 ; j<SIZE ; ++j){ // make image2 == image1
+           image2[i][j]=image2[i][j];
+        }
+    for (int i=0 ; i<SIZE ; ++i)
+        for (int j=0 ; j<SIZE ; ++j){ // make image1 while image
+            image[i][j]=255;
+        }
+    std :: cout<<"Enter the ratio: ";
+    int n;
+    std :: cin>>n; // take the ratio of new image from user
+    if (n == 2){ // if ratio == 1/2
+        int row=0 , clm;
+        for (int i=0 ; i<SIZE ; i+=2){
+            clm=0;
+            for (int j=0 ; j<SIZE ; j+=2){
+                image[row][clm]= image2[i][j]; // save pixel and skip pixel
+                clm++;
+            }
+            row++;
+        }
+    }
+    else if (n == 3){ // if ratio == 1/3
+        int m,y=0;
+        for (int i=0 ; i<SIZE ; i+=3){
+            m=0;
+            for (int j=0 ; j<SIZE ; j+=3){
+                image[y][m]=image2[i][j]; // save pixel and skip  three pixels
+                m++;
+            }
+            y++;
+        }
+    }
+    else if (n == 4){ // if ratio == 1/4
+        int y=0,m;
+        for (int i=0 ; i<SIZE ; i+=4){
+            m=0;
+            for (int j=0 ; j<SIZE ; j+=4){
+                image[y][m]=image2[i][j]; // save pixel and skip 4 pixels
+                m++;
+            }
+            y++;
+        }
+    }
+
+}
+// Author: Menna ali abd elbaky
+// Last Modification Date:	9/10/2023
+// Purpose: to make photo more  blural
+void  Blur (){
+    for (int i=2 ; i<SIZE-2 ; i++){
+        for (int j=2 ; j<SIZE-2 ; j++){ //take the degree of all pixels around the pixel that have been chosen
+            int f=image[i][j];          // and make all these pixels == the average of them
+            int sc=image[i][j+1],d=image[i+1][j], y=image[i][j-1],w=image[i-1][j];//4 d
+            int dw=image[i+1][j+1], r=image[i+1][j-1],t=image[i-1][j-1],p=image[i-1][j+1];//diagonal
+            long long nw=(f+sc+d+y+w+dw+r+t+p)/9;
+            image[i][j]=nw;
+            image[i][j+1]=nw,image[i+1][j]=nw ,image[i-1][j]=nw,image[i][j-1]=nw;//1
+            image[i-1][j+1]=nw,image[i+1][j+1]=nw ,image[i+1][j-1]=nw,image[i-1][j-1]=nw;//2
+        }
+    }
+}
+
