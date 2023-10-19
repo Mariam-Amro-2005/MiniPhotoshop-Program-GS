@@ -285,17 +285,26 @@ void rotateImage() {
 // If the pixel that I am standing on is larger than 115
 // I will turn it to white, if less, I will turn it to black.
 
-void BAW(){
-
+void BWA()
+{
+    int sum = 0, av = 0;
     for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-
-            if (image[i][j] > 115)
-                image[i][j] = 255;
-            else
-                image[i][j] = 0;
+        for (int j = 0; j < SIZE; j++)
+        {
+            av=( (0.21*image[i][j][0])+(0.72*image[i][j][1])+(0.07*image[i][j][2]));
+            if (av<128){
+                image[i][j][0]=0;
+                image[i][j][1]=0;
+                image[i][j][2]=0;
+            }
+            else{
+                image[i][j][0]=255;
+                image[i][j][1]=255;
+                image[i][j][2]=255;
+            }
         }
     }
+
 }
 
 // Author: Menna Ali Abd Elbaky
@@ -346,34 +355,37 @@ void Dark_Light(){
 // If he requests to flip the image vertically or horizontally
 // we will fulfill his request through these function.
 
-void flip(){
+void  flip(){
     cout << "Do you want to flip the image (h)orizontally or (v)ertically? ";
     string s2;
     cin >> s2;
-    if (s2[0] == 'h')
+    if (s2[0] == 'v')        //I divide the image into height
     {
-        for (int x = 0; x < SIZE; x++)
-        {
+        for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE / 2; y++) {
-                int temp = image[x][y];
-                image[x][y] = image[x][SIZE - y];
-                image[x][SIZE - y] = temp;
+                for (int k= 0; k <3; ++k) {
+
+                    int temp = image[x][y][k];
+                    image[x][y][k] = image[x][SIZE - y][k];
+                    image[x][SIZE - y][k] = temp;
+                }
             }
         }
-    }
-    else if (s2[0]=='v')
+    }  else if (s2[0]=='h')
     {
         for (int x = 0; x < SIZE / 2; x++) //width
         {
-            for (int y = 0; y < SIZE; y++)
-            {
-                int temp = image[x][y];
-                image[x][y] = image[SIZE-x][y];
-                image[SIZE-x][y] = temp;
+            for (int y = 0; y < SIZE; y++) {
+                for (int k = 0; k < 3; ++k) {
+
+
+                    int temp = image[x][y][k];
+                    image[x][y][k] = image[SIZE - x][y][k];
+                    image[SIZE - x][y][k] = temp;
+                }
             }
         }
     }
-
 }
 
 // Author: Menna Ali Abd Elbaky
@@ -477,3 +489,9 @@ void shuffleImage(){
 bool isEven(int n) {    // Function to check if the number is even or not
     return (n % 2 == 0); 
     } 
+
+
+
+
+
+
